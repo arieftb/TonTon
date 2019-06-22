@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_movies"
+        android:enabled="true"
+        android:title="@string/menu_title_movies"
+        android:icon="@drawable/ic_local_movies_primary_24dp"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_tv_shows"
+        android:enabled="true"
+        android:icon="@drawable/ic_live_tv_primary_24dp"
+        android:title="@string/menu_title_tv_shows"
+        app:showAsAction="ifRoom"/>
+</menu>
