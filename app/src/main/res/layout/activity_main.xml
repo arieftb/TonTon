@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Developed by arieftb on 6/22/19 9:54 PM.
+  ~ Last Modified 6/22/19 9:40 PM.
+  ~ Copyright (c) 2019. All rights reserved.
+  ~ www.arieftb.com
+  -->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
