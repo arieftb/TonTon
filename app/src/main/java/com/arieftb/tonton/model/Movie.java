@@ -15,6 +15,15 @@ public class Movie implements Parcelable {
     private Double rating;
     private int poster;
 
+    public Movie(String title, String genre, String description, String releaseDate, Double rating, int poster) {
+        this.title = title;
+        this.genre = genre;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.rating = rating;
+        this.poster = poster;
+    }
+
     public int getPoster() {
         return poster;
     }
