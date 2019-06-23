@@ -7,13 +7,16 @@
 
 package com.arieftb.tonton.ui.main;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.arieftb.tonton.R;
+import com.arieftb.tonton.ui.movie.MoviesFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -33,21 +36,29 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_movies:
-                setContent(getString(R.string.menu_title_movies));
+                setContent(getString(R.string.menu_title_movies), MoviesFragment.getInstance());
                 break;
             case R.id.menu_tv_shows:
-                setContent(getString(R.string.menu_title_tv_shows));
+                setContent(getString(R.string.menu_title_tv_shows), null);
                 break;
             default:
-                setContent(getString(R.string.app_name));
+                setContent(getString(R.string.app_name), null);
                 break;
         }
         return true;
     }
 
-    private void setContent(String title) {
+    private void setContent(String title, Fragment fragment) {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
+        }
+
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .replace(R.id.frame_main_content, fragment)
+                    .commit();
         }
     }
 }

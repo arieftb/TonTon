@@ -14,8 +14,8 @@ import com.arieftb.tonton.utils.Dummy;
 
 import java.util.List;
 
-class MoviesViewModel extends ViewModel {
-    List<Movie> getMovies() {
+public class MoviesViewModel extends ViewModel {
+    public List<Movie> getMovies() {
         return Dummy.getDummyMovies();
     }
 }

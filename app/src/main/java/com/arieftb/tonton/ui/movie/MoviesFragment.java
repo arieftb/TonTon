@@ -36,6 +36,10 @@ public class MoviesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static Fragment getInstance() {
+        return new MoviesFragment();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
