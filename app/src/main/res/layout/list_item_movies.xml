@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Developed by arieftb on 6/23/19 8:53 PM.
+  ~ Last Modified 6/23/19 8:53 PM.
+  ~ Copyright (c) 2019. All rights reserved.
+  ~ www.arieftb.com
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
