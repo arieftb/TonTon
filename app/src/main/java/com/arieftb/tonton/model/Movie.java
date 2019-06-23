@@ -13,6 +13,15 @@ import android.os.Parcelable;
 public class Movie implements Parcelable {
     private String title, genre, description, releaseDate;
     private Double rating;
+    private int poster;
+
+    public int getPoster() {
+        return poster;
+    }
+
+    public void setPoster(int poster) {
+        this.poster = poster;
+    }
 
     public String getTitle() {
         return title;
@@ -62,6 +71,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.poster);
         dest.writeString(this.title);
         dest.writeString(this.genre);
         dest.writeString(this.description);
@@ -75,6 +85,7 @@ public class Movie implements Parcelable {
         this.description = in.readString();
         this.releaseDate = in.readString();
         this.rating = (Double) in.readValue(Double.class.getClassLoader());
+        this.poster = (int) in.readValue(int.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
