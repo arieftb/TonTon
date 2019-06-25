@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.ui.movie.MoviesFragment;
+import com.arieftb.tonton.ui.tvshow.TvShowsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 setContent(getString(R.string.menu_title_movies), MoviesFragment.getInstance());
                 break;
             case R.id.menu_tv_shows:
-                setContent(getString(R.string.menu_title_tv_shows), null);
+                setContent(getString(R.string.menu_title_tv_shows), TvShowsFragment.getInstance());
                 break;
             default:
                 setContent(getString(R.string.app_name), null);
