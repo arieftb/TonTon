@@ -13,15 +13,20 @@ import android.os.Parcelable;
 public class TvShow implements Parcelable {
     private String title, genre, description, releaseDate;
     private Double rating;
-    private int poster;
+    private int poster, id;
 
-    public TvShow(String title, String genre, String description, String releaseDate, Double rating, int poster) {
+    public TvShow(int id, String title, String genre, String description, String releaseDate, Double rating, int poster) {
+        this.id = id;
         this.title = title;
         this.genre = genre;
         this.description = description;
         this.releaseDate = releaseDate;
         this.rating = rating;
         this.poster = poster;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -56,6 +61,7 @@ public class TvShow implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
         dest.writeString(this.title);
         dest.writeString(this.genre);
         dest.writeString(this.description);
@@ -68,6 +74,7 @@ public class TvShow implements Parcelable {
     }
 
     protected TvShow(Parcel in) {
+        this.id = in.readInt();
         this.title = in.readString();
         this.genre = in.readString();
         this.description = in.readString();
