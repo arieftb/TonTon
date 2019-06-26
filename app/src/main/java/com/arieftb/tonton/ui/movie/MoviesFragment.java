@@ -8,7 +8,9 @@
 package com.arieftb.tonton.ui.movie;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +24,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.Movie;
+import com.arieftb.tonton.ui.moviedetail.MovieDetailActivity;
+import com.arieftb.tonton.utils.OnItemClickListener;
 
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends Fragment implements OnItemClickListener {
 
     private RecyclerView recyclerViewMovies;
 
@@ -65,10 +69,19 @@ public class MoviesFragment extends Fragment {
 
             MoviesAdapter moviesAdapter = new MoviesAdapter(getActivity());
             moviesAdapter.setMovies(movies);
+            moviesAdapter.addItemClickListener(this);
 
             recyclerViewMovies.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerViewMovies.setHasFixedSize(true);
             recyclerViewMovies.setAdapter(moviesAdapter);
         }
+    }
+
+    @Override
+    public void onItemClick(View view, Object object) {
+        Movie movie = (Movie) object;
+        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+        intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.getId());
+        startActivity(intent);
     }
 }

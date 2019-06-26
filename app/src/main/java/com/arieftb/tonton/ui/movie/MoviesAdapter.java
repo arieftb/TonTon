@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.Movie;
+import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     private List<Movie> movies = new ArrayList<>();
     private final Activity activity;
+    private OnItemClickListener onItemClickListener;
 
     MoviesAdapter(Activity activity) {
         this.activity = activity;
@@ -41,6 +43,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         if (movies == null) return;
         this.movies.clear();
         this.movies.addAll(movies);
+    }
+
+    void addItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
 
@@ -68,7 +74,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         return getMovies().size();
     }
 
-    class MoviesViewHolder extends RecyclerView.ViewHolder {
+    class MoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView textMovieTitle;
         final TextView textMovieData;
@@ -82,6 +88,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             textMovieData = itemView.findViewById(R.id.text_movie_data);
             textMovieRating = itemView.findViewById(R.id.text_movie_rate);
             imageMoviePoster = itemView.findViewById(R.id.image_movie_poster);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Object object = movies.get(getAdapterPosition());
+            onItemClickListener.onItemClick(v, object);
         }
     }
 }
