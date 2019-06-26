@@ -10,6 +10,7 @@
     <string name="menu_title_movies">Movies</string>
     <string name="menu_title_tv_shows">TV Shows</string>
     <string name="menu_title_movie_detail">Movie Detail</string>
+    <string name="menu_title_tv_show_detail">TV Show Detail</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

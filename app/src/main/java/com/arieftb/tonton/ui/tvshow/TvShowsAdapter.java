@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.Movie;
 import com.arieftb.tonton.model.TvShow;
+import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder> {
 
+    private OnItemClickListener onItemClickListener;
     private List<TvShow> tvShows = new ArrayList<>();
     private final Activity activity;
 
@@ -42,6 +44,10 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
         if (tvShows == null) return;
         this.tvShows.clear();
         this.tvShows.addAll(tvShows);
+    }
+
+    void addItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
 
@@ -69,7 +75,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
         return getTvShows().size();
     }
 
-    class TvShowViewHolder extends RecyclerView.ViewHolder {
+    class TvShowViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView textTvShowTitle;
         final TextView textTvShowData;
@@ -83,6 +89,14 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
             textTvShowData = itemView.findViewById(R.id.text_tv_show_data);
             textTvShowRating = itemView.findViewById(R.id.text_tv_show_rate);
             imageTvShowPoster = itemView.findViewById(R.id.image_tv_show_poster);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Object object = getTvShows().get(getAdapterPosition());
+            onItemClickListener.onItemClick(v, object);
         }
     }
 }

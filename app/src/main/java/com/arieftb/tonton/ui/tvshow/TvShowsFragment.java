@@ -8,6 +8,7 @@
 package com.arieftb.tonton.ui.tvshow;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,13 +25,15 @@ import android.view.ViewGroup;
 
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.TvShow;
+import com.arieftb.tonton.ui.tvshowdetail.TvShowDetailActivity;
+import com.arieftb.tonton.utils.OnItemClickListener;
 
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TvShowsFragment extends Fragment {
+public class TvShowsFragment extends Fragment implements OnItemClickListener {
 
     private RecyclerView recyclerTvShows;
 
@@ -67,10 +70,19 @@ public class TvShowsFragment extends Fragment {
 
             TvShowsAdapter tvShowsAdapter = new TvShowsAdapter(getActivity());
             tvShowsAdapter.setTvShows(tvShows);
+            tvShowsAdapter.addItemClickListener(this);
 
             recyclerTvShows.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerTvShows.setHasFixedSize(true);
             recyclerTvShows.setAdapter(tvShowsAdapter);
         }
+    }
+
+    @Override
+    public void onItemClick(View view, Object object) {
+        TvShow tvShow = (TvShow) object;
+        Intent intent = new Intent(getContext(), TvShowDetailActivity.class);
+        intent.putExtra(TvShowDetailActivity.TV_SHOW_ID, tvShow.getId());
+        startActivity(intent);
     }
 }

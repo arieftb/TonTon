@@ -8,6 +8,7 @@
 package com.arieftb.tonton.ui.moviedetail;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,12 +33,21 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
         setView();
 
-        int movieId = getIntent().getIntExtra(MOVIE_ID, 0);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
+        int movieId = getIntent().getIntExtra(MOVIE_ID, 0);
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
         movieDetailViewModel.setMovieId(movieId);
 
         setMovieDetail(movieDetailViewModel.getMovieDetail());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     private void setView() {
