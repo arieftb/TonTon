@@ -27,7 +27,7 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
-    private List<Movie> movies = new ArrayList<>();
+    private final List<Movie> movies = new ArrayList<>();
     private final Activity activity;
     private OnItemClickListener onItemClickListener;
 

@@ -11,9 +11,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class TvShow implements Parcelable {
-    private String title, genre, description, releaseDate;
-    private Double rating;
-    private int poster, id;
+    private final String title, genre, description, releaseDate;
+    private final Double rating;
+    private final int poster, id;
 
     public TvShow(int id, String title, String genre, String description, String releaseDate, Double rating, int poster) {
         this.id = id;
@@ -70,10 +70,7 @@ public class TvShow implements Parcelable {
         dest.writeInt(this.poster);
     }
 
-    public TvShow() {
-    }
-
-    protected TvShow(Parcel in) {
+    private TvShow(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
         this.genre = in.readString();

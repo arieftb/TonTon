@@ -29,7 +29,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class MovieDetailActivityTest {
 
-    private Movie movieDummy = Dummy.getDummyMovies().get(0);
+    private final Movie movieDummy = Dummy.getDummyMovies().get(0);
     private String movieData;
 
     @Rule

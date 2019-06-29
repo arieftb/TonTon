@@ -29,7 +29,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class TvShowDetailActivityTest {
 
-    private TvShow tvShowDummy = Dummy.getDummyTvShows().get(0);
+    private final TvShow tvShowDummy = Dummy.getDummyTvShows().get(0);
     private String tvShowData;
 
     @Rule

@@ -8,7 +8,6 @@
 
 <resources>
     <color name="colorPrimary">#263032</color>
-    <color name="colorPrimaryDark">#1E2527</color>
     <color name="colorAccent">#efc42f</color>
 
     <color name="background_soft_gray">#f6f7fa</color>

@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.Movie;
 import com.arieftb.tonton.model.TvShow;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
@@ -29,7 +28,7 @@ import java.util.List;
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder> {
 
     private OnItemClickListener onItemClickListener;
-    private List<TvShow> tvShows = new ArrayList<>();
+    private final List<TvShow> tvShows = new ArrayList<>();
     private final Activity activity;
 
     TvShowsAdapter(Activity activity) {
@@ -79,7 +78,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
 
         final TextView textTvShowTitle;
         final TextView textTvShowData;
-        final  TextView textTvShowRating;
+        final TextView textTvShowRating;
         final ImageView imageTvShowPoster;
 
         TvShowViewHolder(@NonNull View itemView) {

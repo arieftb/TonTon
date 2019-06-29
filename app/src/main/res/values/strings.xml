@@ -13,7 +13,6 @@
     <string name="menu_title_tv_show_detail">TV Show Detail</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="content_description_movie_poster">Movie Poster Image</string>
     <string name="content_description_tv_show_poster">TV Show Poster Image</string>
 
