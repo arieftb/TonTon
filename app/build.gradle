@@ -51,6 +51,9 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
 
 
+//    Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+
 //  Unit Test
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"

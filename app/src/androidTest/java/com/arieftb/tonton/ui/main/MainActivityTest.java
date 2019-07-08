@@ -36,9 +36,9 @@ public class MainActivityTest {
         onView(withId(R.id.recycler_movies_list)).check(new RecyclerViewItemCountAssertion(18));
         Thread.sleep(3000);
 
-        onView(withId(R.id.recycler_movies_list)).perform(RecyclerViewActions.scrollToPosition(10));
+        onView(withId(R.id.recycler_movies_list)).perform(RecyclerViewActions.scrollToPosition(17));
         Thread.sleep(3000);
-        onView(withId(R.id.recycler_movies_list)).perform(RecyclerViewActions.actionOnItemAtPosition(10, click()));
+        onView(withId(R.id.recycler_movies_list)).perform(RecyclerViewActions.actionOnItemAtPosition(17, click()));
 
         Thread.sleep(3000);
         pressBack();
@@ -50,9 +50,9 @@ public class MainActivityTest {
         onView(withId(R.id.recycler_tv_shows_list)).check(matches(isDisplayed()));
         onView(withId(R.id.recycler_tv_shows_list)).check(new RecyclerViewItemCountAssertion(19));
         Thread.sleep(3000);
-        onView(withId(R.id.recycler_tv_shows_list)).perform(RecyclerViewActions.scrollToPosition(10));
+        onView(withId(R.id.recycler_tv_shows_list)).perform(RecyclerViewActions.scrollToPosition(18));
         Thread.sleep(3000);
-        onView(withId(R.id.recycler_tv_shows_list)).perform(RecyclerViewActions.actionOnItemAtPosition(10, click()));
+        onView(withId(R.id.recycler_tv_shows_list)).perform(RecyclerViewActions.actionOnItemAtPosition(18, click()));
 
         Thread.sleep(3000);
         pressBack();
