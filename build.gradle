@@ -35,6 +35,8 @@ ext {
     legacySupportVersion = '1.0.0'
     lifeCycleVersion = '2.0.0'
     glideVersion = '4.9.0'
+    gsonVersion = '2.8.5'
+    okHttpVersion = '3.11.0'
     retrofitVersion = '2.6.0'
     junitVersion = '4.12'
     mockitoVersion = '2.22.0'
