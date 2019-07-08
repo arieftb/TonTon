@@ -40,6 +40,7 @@ ext {
     rxJavaVersion = '2.2.6'
     rxAndroidVersion = '2.1.0'
     retrofitVersion = '2.6.0'
+    rxAdapterVersion = '2.2.0'
     junitVersion = '4.12'
     mockitoVersion = '2.22.0'
     xTestVersion = '1.1.1'
