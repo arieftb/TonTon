@@ -34,6 +34,7 @@ import com.arieftb.tonton.utils.ViewModelFactory;
 public class MoviesFragment extends Fragment implements OnItemClickListener {
 
     private RecyclerView recyclerViewMovies;
+    private MoviesViewModel moviesViewModel;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -49,6 +50,14 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
         return ViewModelProviders.of(activity, factory).get(MoviesViewModel.class);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getActivity() != null) {
+            moviesViewModel = obtainViewModel(getActivity());
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,9 +79,8 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
 
         if (getActivity() != null) {
             MoviesAdapter moviesAdapter = new MoviesAdapter(getActivity());
-            MoviesViewModel moviesViewModel = obtainViewModel(getActivity());
 
-            moviesViewModel.getMovies().observe(this, movies -> {
+            moviesViewModel.getMovies().observe(getViewLifecycleOwner(), movies -> {
                 moviesAdapter.setMovies(movies);
                 moviesAdapter.notifyDataSetChanged();
                 moviesAdapter.addItemClickListener(this);

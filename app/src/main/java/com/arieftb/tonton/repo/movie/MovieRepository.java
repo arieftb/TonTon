@@ -10,7 +10,6 @@ package com.arieftb.tonton.repo.movie;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.arieftb.tonton.R;
 import com.arieftb.tonton.data.MovieDataSource;
 import com.arieftb.tonton.model.response.ResultsItem;
 import com.arieftb.tonton.repo.callback.MoviesCallback;
