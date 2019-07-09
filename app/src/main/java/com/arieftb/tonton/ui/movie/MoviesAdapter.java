@@ -17,8 +17,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.arieftb.tonton.BuildConfig;
 import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.Movie;
 import com.arieftb.tonton.model.response.ResultsItem;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
-    private final List<ResultsItem> movies = new ArrayList<ResultsItem>();
+    private final List<ResultsItem> movies = new ArrayList<>();
     private final Activity activity;
     private OnItemClickListener onItemClickListener;
 
@@ -66,7 +66,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         holder.textMovieData.setText(activity.getString(R.string.text_movie_data, MOVIE.getOriginalLanguage(), MOVIE.getReleaseDate()));
         holder.textMovieRating.setText(String.valueOf(MOVIE.getVoteAverage()));
         Glide.with(holder.itemView)
-                .load(MOVIE.getPosterPath())
+                .load(BuildConfig.BASE_URL_POSTER + MOVIE.getPosterPath())
                 .into(holder.imageMoviePoster);
     }
 
