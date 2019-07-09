@@ -14,6 +14,6 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 public interface NetworkEndPoint {
-    @GET("/discover/movie")
+    @GET("discover/movie")
     Observable<MoviesResponse> getMovies(@Query("api_key") String token);
 }
