@@ -9,9 +9,9 @@ package com.arieftb.tonton.network;
 
 import com.arieftb.tonton.model.response.MoviesResponse;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
 
 public interface NetworkEndPoint {
     @GET("discover/movie")

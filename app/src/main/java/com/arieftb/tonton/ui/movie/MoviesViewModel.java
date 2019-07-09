@@ -7,15 +7,22 @@
 
 package com.arieftb.tonton.ui.movie;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.arieftb.tonton.model.Movie;
-import com.arieftb.tonton.utils.Dummy;
+import com.arieftb.tonton.model.response.ResultsItem;
+import com.arieftb.tonton.repo.movie.MovieRepository;
 
 import java.util.List;
 
 public class MoviesViewModel extends ViewModel {
-    public List<Movie> getMovies() {
-        return Dummy.getDummyMovies();
+    private MovieRepository movieRepository;
+
+    public MoviesViewModel(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
+
+    LiveData<List<ResultsItem>> getMovies() {
+        return movieRepository.getMovies();
     }
 }

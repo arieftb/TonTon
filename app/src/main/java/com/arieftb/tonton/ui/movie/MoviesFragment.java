@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,8 +26,7 @@ import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.Movie;
 import com.arieftb.tonton.ui.moviedetail.MovieDetailActivity;
 import com.arieftb.tonton.utils.OnItemClickListener;
-
-import java.util.List;
+import com.arieftb.tonton.utils.ViewModelFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +41,12 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
 
     public static Fragment getInstance() {
         return new MoviesFragment();
+    }
+
+    @NonNull
+    private static MoviesViewModel obtainViewModel(FragmentActivity activity) {
+        ViewModelFactory factory = ViewModelFactory.getInstance();
+        return ViewModelProviders.of(activity, factory).get(MoviesViewModel.class);
     }
 
 
@@ -63,12 +69,14 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
         super.onActivityCreated(savedInstanceState);
 
         if (getActivity() != null) {
-            MoviesViewModel moviesViewModel = ViewModelProviders.of(this).get(MoviesViewModel.class);
-            List<Movie> movies = moviesViewModel.getMovies();
-
             MoviesAdapter moviesAdapter = new MoviesAdapter(getActivity());
-            moviesAdapter.setMovies(movies);
-            moviesAdapter.addItemClickListener(this);
+            MoviesViewModel moviesViewModel = obtainViewModel(getActivity());
+
+            moviesViewModel.getMovies().observe(this, movies -> {
+                moviesAdapter.setMovies(movies);
+                moviesAdapter.notifyDataSetChanged();
+                moviesAdapter.addItemClickListener(this);
+            });
 
             recyclerViewMovies.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerViewMovies.setHasFixedSize(true);

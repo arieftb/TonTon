@@ -22,15 +22,24 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    public final String SELECTED_MENU = "selected_menu";
+    private BottomNavigationView navMainBottom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navMainBottom = findViewById(R.id.nav_main_bottom);
-
-        onNavigationItemSelected(navMainBottom.getMenu().getItem(0));
+        navMainBottom = findViewById(R.id.nav_main_bottom);
+        navMainBottom.setSelectedItemId(R.id.menu_movies);
         navMainBottom.setOnNavigationItemSelectedListener(this);
+
+        if (savedInstanceState != null) {
+            int menuId = savedInstanceState.getInt(SELECTED_MENU);
+            navMainBottom.setSelectedItemId(menuId);
+        } else {
+            navMainBottom.setSelectedItemId(R.id.menu_movies);
+        }
     }
 
     @Override
@@ -47,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SELECTED_MENU, navMainBottom.getSelectedItemId());
     }
 
     private void setContent(String title, Fragment fragment) {

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.Movie;
+import com.arieftb.tonton.model.response.ResultsItem;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
 
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
-    private final List<Movie> movies = new ArrayList<>();
+    private final List<ResultsItem> movies = new ArrayList<ResultsItem>();
     private final Activity activity;
     private OnItemClickListener onItemClickListener;
 
@@ -35,11 +36,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         this.activity = activity;
     }
 
-    private List<Movie> getMovies() {
+    private List<ResultsItem> getMovies() {
         return movies;
     }
 
-    void setMovies(List<Movie> movies) {
+    void setMovies(List<ResultsItem> movies) {
         if (movies == null) return;
         this.movies.clear();
         this.movies.addAll(movies);
@@ -59,13 +60,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     @Override
     public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
-        final Movie MOVIE = getMovies().get(position);
+        final ResultsItem MOVIE = getMovies().get(position);
 
         holder.textMovieTitle.setText(MOVIE.getTitle());
-        holder.textMovieData.setText(activity.getString(R.string.text_movie_data, MOVIE.getGenre(), MOVIE.getReleaseDate()));
-        holder.textMovieRating.setText(String.valueOf(MOVIE.getRating()));
+        holder.textMovieData.setText(activity.getString(R.string.text_movie_data, MOVIE.getOriginalLanguage(), MOVIE.getReleaseDate()));
+        holder.textMovieRating.setText(String.valueOf(MOVIE.getVoteAverage()));
         Glide.with(holder.itemView)
-                .load(MOVIE.getPoster())
+                .load(MOVIE.getPosterPath())
                 .into(holder.imageMoviePoster);
     }
 

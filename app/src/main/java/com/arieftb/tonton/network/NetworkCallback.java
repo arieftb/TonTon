@@ -7,15 +7,21 @@
 
 package com.arieftb.tonton.network;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.subscribers.DefaultSubscriber;
 
-public abstract class NetworkCallback<M> extends Subscriber<M> {
+public abstract class NetworkCallback<M> implements Observer<M> {
 
-    abstract void onSuccess(M model);
+    public abstract void onSuccess(M model);
 
-    abstract void onFailure(int code, String message);
+    public abstract void onFailure(int code, String message);
 
-    abstract void onFinish();
+    public abstract void onFinish();
+
+    @Override
+    public void onSubscribe(Disposable d) {
+    }
 
     @Override
     public void onError(Throwable e) {
@@ -23,7 +29,7 @@ public abstract class NetworkCallback<M> extends Subscriber<M> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         onFinish();
     }
 
