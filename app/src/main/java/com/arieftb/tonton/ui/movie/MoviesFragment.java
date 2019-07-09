@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.Movie;
+import com.arieftb.tonton.model.response.ResultsItem;
 import com.arieftb.tonton.ui.moviedetail.MovieDetailActivity;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.arieftb.tonton.utils.ViewModelFactory;
@@ -94,7 +94,7 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public void onItemClick(View view, Object object) {
-        Movie movie = (Movie) object;
+        ResultsItem movie = (ResultsItem) object;
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.getId());
         startActivity(intent);

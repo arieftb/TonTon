@@ -22,6 +22,7 @@ import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.response.ResultsItem;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         holder.textMovieRating.setText(String.valueOf(MOVIE.getVoteAverage()));
         Glide.with(holder.itemView)
                 .load(BuildConfig.BASE_URL_POSTER + MOVIE.getPosterPath())
+                .apply(new RequestOptions().placeholder(R.drawable.img_placeholder))
                 .into(holder.imageMoviePoster);
     }
 
