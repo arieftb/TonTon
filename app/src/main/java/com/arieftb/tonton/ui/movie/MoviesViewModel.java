@@ -11,14 +11,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.arieftb.tonton.model.response.ResultsItem;
+import com.arieftb.tonton.model.response.movies.Movie;
 import com.arieftb.tonton.repo.movie.MovieRepository;
 
 import java.util.List;
 
 public class MoviesViewModel extends ViewModel {
     private MovieRepository movieRepository;
-    private LiveData<List<ResultsItem>> moviesData = new MutableLiveData<>();
+    private LiveData<List<Movie>> moviesData = new MutableLiveData<>();
+    private MutableLiveData<String> message = new MutableLiveData<>();
 
     public MoviesViewModel(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
@@ -29,11 +30,17 @@ public class MoviesViewModel extends ViewModel {
         moviesData = movieRepository.getMovies();
     }
 
-    LiveData<List<ResultsItem>> getMovies() {
+    LiveData<List<Movie>> getMovies() {
         return moviesData;
     }
 
     LiveData<Boolean> getIsLoading() {
         return movieRepository.isLoading();
     }
+
+//    LiveData<String> getMessageError() {
+//        message.postValue(movieRepository.getError());
+//
+//        return
+//    }
 }

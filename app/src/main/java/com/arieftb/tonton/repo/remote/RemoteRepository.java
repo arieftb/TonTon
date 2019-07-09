@@ -8,8 +8,9 @@
 package com.arieftb.tonton.repo.remote;
 
 import com.arieftb.tonton.BuildConfig;
-import com.arieftb.tonton.model.response.MoviesResponse;
+import com.arieftb.tonton.model.response.movies.MoviesResponse;
 import com.arieftb.tonton.network.NetworkClient;
+import com.arieftb.tonton.repo.callback.ConnectionCallback;
 import com.arieftb.tonton.repo.callback.MoviesCallback;
 
 import io.reactivex.Observer;
@@ -35,7 +36,7 @@ public class RemoteRepository {
         return INSTANCE;
     }
 
-    public void getMovies(final MoviesCallback moviesCallback) {
+    public void getMovies(final MoviesCallback moviesCallback, final ConnectionCallback connectionCallback) {
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
         networkClient.getApiService().getMovies(BuildConfig.API_KEY)
                 .subscribeOn(Schedulers.io())
@@ -44,7 +45,7 @@ public class RemoteRepository {
                     @Override
                     public void onSubscribe(Disposable d) {
                         compositeDisposable.add(d);
-                        moviesCallback.onLoading(true);
+                        connectionCallback.onLoading(true);
                     }
 
                     @Override
@@ -59,7 +60,7 @@ public class RemoteRepository {
 
                     @Override
                     public void onComplete() {
-                        moviesCallback.onLoading(false);
+                        connectionCallback.onLoading(false);
                     }
                 });
     }

@@ -1,4 +1,11 @@
-package com.arieftb.tonton.model.response;
+/*
+ * Developed by arieftb on 7/9/19 11:13 PM.
+ * Last Modified 7/9/19 11:10 PM.
+ * Copyright (c) 2019. All rights reserved.
+ * www.arieftb.com
+ */
+
+package com.arieftb.tonton.model.response.movies;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +21,7 @@ public class MoviesResponse{
 	private int totalPages;
 
 	@SerializedName("results")
-	private List<ResultsItem> results;
+	private List<Movie> results;
 
 	@SerializedName("total_results")
 	private int totalResults;
@@ -35,11 +42,11 @@ public class MoviesResponse{
 		return totalPages;
 	}
 
-	public void setResults(List<ResultsItem> results){
+	public void setResults(List<Movie> results){
 		this.results = results;
 	}
 
-	public List<ResultsItem> getResults(){
+	public List<Movie> getResults(){
 		return results;
 	}
 

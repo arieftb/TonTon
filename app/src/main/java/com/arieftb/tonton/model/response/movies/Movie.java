@@ -1,11 +1,18 @@
-package com.arieftb.tonton.model.response;
+/*
+ * Developed by arieftb on 7/9/19 11:13 PM.
+ * Last Modified 7/9/19 11:10 PM.
+ * Copyright (c) 2019. All rights reserved.
+ * www.arieftb.com
+ */
+
+package com.arieftb.tonton.model.response.movies;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 
-public class ResultsItem{
+public class Movie {
 
 	@SerializedName("overview")
 	private String overview;
@@ -164,7 +171,7 @@ public class ResultsItem{
 	@Override
  	public String toString(){
 		return 
-			"ResultsItem{" + 
+			"Movie{" +
 			"overview = '" + overview + '\'' + 
 			",original_language = '" + originalLanguage + '\'' + 
 			",original_title = '" + originalTitle + '\'' + 

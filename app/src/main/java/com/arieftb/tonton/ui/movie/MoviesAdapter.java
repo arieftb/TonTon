@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.arieftb.tonton.BuildConfig;
 import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.response.ResultsItem;
+import com.arieftb.tonton.model.response.movies.Movie;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -29,7 +29,7 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
-    private final List<ResultsItem> movies = new ArrayList<>();
+    private final List<Movie> movies = new ArrayList<>();
     private final Activity activity;
     private OnItemClickListener onItemClickListener;
 
@@ -37,11 +37,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         this.activity = activity;
     }
 
-    private List<ResultsItem> getMovies() {
+    private List<Movie> getMovies() {
         return movies;
     }
 
-    void setMovies(List<ResultsItem> movies) {
+    void setMovies(List<Movie> movies) {
         if (movies == null) return;
         this.movies.clear();
         this.movies.addAll(movies);
@@ -61,7 +61,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     @Override
     public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
-        final ResultsItem MOVIE = getMovies().get(position);
+        final Movie MOVIE = getMovies().get(position);
 
         holder.textMovieTitle.setText(MOVIE.getTitle());
         holder.textMovieData.setText(activity.getString(R.string.text_movie_data, MOVIE.getOriginalLanguage(), MOVIE.getReleaseDate()));

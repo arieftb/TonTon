@@ -7,7 +7,7 @@
 
 package com.arieftb.tonton.network;
 
-import com.arieftb.tonton.model.response.MoviesResponse;
+import com.arieftb.tonton.model.response.movies.MoviesResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
