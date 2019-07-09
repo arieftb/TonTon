@@ -13,11 +13,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +37,7 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
 
     private RecyclerView recyclerViewMovies;
     private MoviesViewModel moviesViewModel;
+    private ProgressBar progressMoviesLoad;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -71,6 +74,7 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerViewMovies = view.findViewById(R.id.recycler_movies_list);
+        progressMoviesLoad = view.findViewById(R.id.progress_movies_load);
     }
 
     @Override
@@ -85,6 +89,9 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
                 moviesAdapter.notifyDataSetChanged();
                 moviesAdapter.addItemClickListener(this);
             });
+
+            moviesViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> progressMoviesLoad.setVisibility(isLoading ? View.VISIBLE : View.GONE));
+
 
             recyclerViewMovies.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerViewMovies.setHasFixedSize(true);

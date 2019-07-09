@@ -10,6 +10,7 @@ package com.arieftb.tonton.repo.movie;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.arieftb.tonton.data.DataSource;
 import com.arieftb.tonton.data.MovieDataSource;
 import com.arieftb.tonton.model.response.ResultsItem;
 import com.arieftb.tonton.repo.callback.MoviesCallback;
@@ -17,11 +18,12 @@ import com.arieftb.tonton.repo.remote.RemoteRepository;
 
 import java.util.List;
 
-public class MovieRepository implements MovieDataSource {
+public class MovieRepository implements MovieDataSource, DataSource {
 
     private volatile static MovieRepository INSTANCE = null;
 
     private final RemoteRepository remoteRepository;
+    private MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>();
 
     public MovieRepository(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
@@ -48,8 +50,19 @@ public class MovieRepository implements MovieDataSource {
             public void onMoviesReceived(List<ResultsItem> movies) {
                 moviesData.postValue(movies);
             }
+
+            @Override
+            public void onLoading(Boolean isLoading) {
+                isLoadingData.postValue(isLoading);
+            }
         });
 
         return moviesData;
+    }
+
+
+    @Override
+    public LiveData<Boolean> isLoading() {
+        return isLoadingData;
     }
 }

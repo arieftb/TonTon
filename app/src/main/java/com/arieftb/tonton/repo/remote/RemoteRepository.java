@@ -44,6 +44,7 @@ public class RemoteRepository {
                     @Override
                     public void onSubscribe(Disposable d) {
                         compositeDisposable.add(d);
+                        moviesCallback.onLoading(true);
                     }
 
                     @Override
@@ -58,7 +59,7 @@ public class RemoteRepository {
 
                     @Override
                     public void onComplete() {
-
+                        moviesCallback.onLoading(false);
                     }
                 });
     }

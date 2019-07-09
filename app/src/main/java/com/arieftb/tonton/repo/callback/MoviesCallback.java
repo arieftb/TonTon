@@ -13,4 +13,5 @@ import java.util.List;
 
 public interface MoviesCallback {
     void onMoviesReceived(List<ResultsItem> movies);
+    void onLoading(Boolean isLoading);
 }

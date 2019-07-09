@@ -32,4 +32,8 @@ public class MoviesViewModel extends ViewModel {
     LiveData<List<ResultsItem>> getMovies() {
         return moviesData;
     }
+
+    LiveData<Boolean> getIsLoading() {
+        return movieRepository.isLoading();
+    }
 }
