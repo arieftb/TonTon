@@ -43,6 +43,7 @@ public class RemoteRepository {
     }
 
     public void getMovies(final MoviesCallback moviesCallback, final ConnectionCallback connectionCallback) {
+        connectionCallback.onLoading(true);
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
         networkClient.getApiService().getMovies(BuildConfig.API_KEY)
                 .subscribeOn(Schedulers.io())
@@ -51,7 +52,6 @@ public class RemoteRepository {
                     @Override
                     public void onSubscribe(Disposable d) {
                         compositeDisposable.add(d);
-                        connectionCallback.onLoading(true);
                     }
 
                     @Override
