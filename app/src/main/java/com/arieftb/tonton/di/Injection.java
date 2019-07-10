@@ -14,8 +14,8 @@ import com.arieftb.tonton.repo.movie.MovieRepository;
 import com.arieftb.tonton.repo.remote.RemoteRepository;
 
 public class Injection {
-    public static MovieRepository provideMovieRepo() {
-        RemoteRepository remoteRepository = RemoteRepository.getInstance(new NetworkClient());
+    public static MovieRepository provideMovieRepo(Application application) {
+        RemoteRepository remoteRepository = RemoteRepository.getInstance(new NetworkClient(), application);
 
         return MovieRepository.getInstance(remoteRepository);
     }

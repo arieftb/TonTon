@@ -38,9 +38,5 @@ public class MoviesViewModel extends ViewModel {
         return movieRepository.isLoading();
     }
 
-//    LiveData<String> getMessageError() {
-//        message.postValue(movieRepository.getError());
-//
-//        return
-//    }
+    LiveData<String> getMessageError() { return movieRepository.onError(); }
 }

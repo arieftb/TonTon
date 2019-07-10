@@ -11,4 +11,5 @@ import androidx.lifecycle.LiveData;
 
 public interface DataSource {
     LiveData<Boolean> isLoading();
+    LiveData<String> onError();
 }

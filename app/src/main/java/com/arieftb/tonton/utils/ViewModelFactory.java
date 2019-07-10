@@ -7,6 +7,8 @@
 
 package com.arieftb.tonton.utils;
 
+import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,11 +27,11 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         this.movieRepository = movieRepository;
     }
 
-    public static ViewModelFactory getInstance() {
+    public static ViewModelFactory getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (ViewModelFactory.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new ViewModelFactory(Injection.provideMovieRepo());
+                    INSTANCE = new ViewModelFactory(Injection.provideMovieRepo(application));
                 }
             }
         }

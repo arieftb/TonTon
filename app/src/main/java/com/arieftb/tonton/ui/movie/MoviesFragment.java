@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.response.movies.Movie;
 import com.arieftb.tonton.ui.moviedetail.MovieDetailActivity;
+import com.arieftb.tonton.utils.DialogHelper;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.arieftb.tonton.utils.ViewModelFactory;
 
@@ -48,7 +49,7 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
 
     @NonNull
     private static MoviesViewModel obtainViewModel(FragmentActivity activity) {
-        ViewModelFactory factory = ViewModelFactory.getInstance();
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
         return ViewModelProviders.of(activity, factory).get(MoviesViewModel.class);
     }
 
@@ -81,20 +82,24 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
         super.onActivityCreated(savedInstanceState);
 
         if (getActivity() != null) {
+            moviesViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> progressMoviesLoad.setVisibility(isLoading ? View.VISIBLE : View.GONE));
+
+            moviesViewModel.getMessageError().observe(getViewLifecycleOwner(), message -> new DialogHelper(getActivity())
+                    .setMessage(message)
+                    .setPrimaryButton(R.string.btn_title_ok,
+                            (dialogInterface, i) -> dialogInterface.dismiss()).create().show());
+
             MoviesAdapter moviesAdapter = new MoviesAdapter(getActivity());
 
             moviesViewModel.getMovies().observe(getViewLifecycleOwner(), movies -> {
                 moviesAdapter.setMovies(movies);
                 moviesAdapter.notifyDataSetChanged();
                 moviesAdapter.addItemClickListener(this);
+
+                recyclerViewMovies.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerViewMovies.setHasFixedSize(true);
+                recyclerViewMovies.setAdapter(moviesAdapter);
             });
-
-            moviesViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> progressMoviesLoad.setVisibility(isLoading ? View.VISIBLE : View.GONE));
-
-
-            recyclerViewMovies.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerViewMovies.setHasFixedSize(true);
-            recyclerViewMovies.setAdapter(moviesAdapter);
         }
     }
 

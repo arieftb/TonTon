@@ -22,4 +22,15 @@
     <string name="content_description_tv_show_detail_banner">TV Show Detail Image Banner</string>
 
     <string name="text_lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+<!--    Button Title-->
+    <string name="btn_title_ok">OK</string>
+
+<!--    User Error Message-->
+    <string name="err_message_unknown">Unknown error occurred, %1$s . Please contact us. [%2$d]</string>
+    <string name="err_message_internal_server">We are very sorry, it seems there is a problem with our servers.</string>
+    <string name="err_message_time_out">Looks like you have an unstable network at the moment, please try again when network stabilizes.</string>
+    <string name="err_message_no_connection">Looks like you don\'t connect to the network, please try again when connect to the network</string>
+
+
 </resources>

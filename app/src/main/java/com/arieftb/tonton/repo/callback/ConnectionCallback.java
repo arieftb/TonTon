@@ -9,4 +9,6 @@ package com.arieftb.tonton.repo.callback;
 
 public interface ConnectionCallback {
     void onLoading(Boolean isLoading);
+
+    void onFailed(String message);
 }

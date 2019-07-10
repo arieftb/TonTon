@@ -7,9 +7,12 @@
 
 package com.arieftb.tonton.repo.remote;
 
+import android.app.Application;
+
 import com.arieftb.tonton.BuildConfig;
 import com.arieftb.tonton.model.response.movies.MoviesResponse;
 import com.arieftb.tonton.network.NetworkClient;
+import com.arieftb.tonton.network.NetworkFailed;
 import com.arieftb.tonton.repo.callback.ConnectionCallback;
 import com.arieftb.tonton.repo.callback.MoviesCallback;
 
@@ -24,14 +27,17 @@ public class RemoteRepository {
     private static RemoteRepository INSTANCE;
     private NetworkClient networkClient;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private NetworkFailed networkFailed = new NetworkFailed();
+    private final Application application;
 
-    public RemoteRepository(NetworkClient networkClient) {
+    public RemoteRepository(NetworkClient networkClient, Application application) {
         this.networkClient = networkClient;
+        this.application = application;
     }
 
-    public static RemoteRepository getInstance(NetworkClient networkClient) {
+    public static RemoteRepository getInstance(NetworkClient networkClient, Application application) {
         if (INSTANCE == null) {
-            INSTANCE = new RemoteRepository(networkClient);
+            INSTANCE = new RemoteRepository(networkClient, application);
         }
         return INSTANCE;
     }
@@ -55,7 +61,8 @@ public class RemoteRepository {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
+                        connectionCallback.onLoading(false);
                     }
 
                     @Override
