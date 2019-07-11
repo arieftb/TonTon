@@ -1,18 +1,13 @@
-/*
- * Developed by arieftb on 7/9/19 11:13 PM.
- * Last Modified 7/9/19 11:10 PM.
- * Copyright (c) 2019. All rights reserved.
- * www.arieftb.com
- */
+package com.arieftb.tonton.model.response.tvshow;
 
-package com.arieftb.tonton.model.response.movies;
+import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 
-public class MoviesResponse{
+public class TvShowsResponse{
 
 	@SerializedName("page")
 	private int page;
@@ -21,7 +16,7 @@ public class MoviesResponse{
 	private int totalPages;
 
 	@SerializedName("results")
-	private List<MovieItem> results;
+	private List<TvShowItem> results;
 
 	@SerializedName("total_results")
 	private int totalResults;
@@ -42,11 +37,11 @@ public class MoviesResponse{
 		return totalPages;
 	}
 
-	public void setResults(List<MovieItem> results){
+	public void setResults(List<TvShowItem> results){
 		this.results = results;
 	}
 
-	public List<MovieItem> getResults(){
+	public List<TvShowItem> getResults(){
 		return results;
 	}
 
@@ -59,9 +54,10 @@ public class MoviesResponse{
 	}
 
 	@Override
+	@NonNull
  	public String toString(){
 		return 
-			"MoviesResponse{" + 
+			"TvShowsResponse{" + 
 			"page = '" + page + '\'' + 
 			",total_pages = '" + totalPages + '\'' + 
 			",results = '" + results + '\'' + 

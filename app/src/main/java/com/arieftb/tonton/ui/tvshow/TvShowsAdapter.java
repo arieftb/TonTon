@@ -17,10 +17,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.arieftb.tonton.BuildConfig;
 import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.TvShow;
+import com.arieftb.tonton.model.response.tvshow.TvShowItem;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,18 +30,18 @@ import java.util.List;
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder> {
 
     private OnItemClickListener onItemClickListener;
-    private final List<TvShow> tvShows = new ArrayList<>();
+    private final List<TvShowItem> tvShows = new ArrayList<>();
     private final Activity activity;
 
     TvShowsAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    private List<TvShow> getTvShows() {
+    private List<TvShowItem> getTvShows() {
         return tvShows;
     }
 
-    void setTvShows(List<TvShow> tvShows) {
+    void setTvShows(List<TvShowItem> tvShows) {
         if (tvShows == null) return;
         this.tvShows.clear();
         this.tvShows.addAll(tvShows);
@@ -59,13 +61,14 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
 
     @Override
     public void onBindViewHolder(@NonNull TvShowViewHolder holder, int position) {
-        final TvShow TVSHOW = getTvShows().get(position);
+        final TvShowItem TV_SHOW = getTvShows().get(position);
 
-        holder.textTvShowTitle.setText(TVSHOW.getTitle());
-        holder.textTvShowData.setText(activity.getString(R.string.text_tv_show_data, TVSHOW.getGenre(), TVSHOW.getReleaseDate()));
-        holder.textTvShowRating.setText(String.valueOf(TVSHOW.getRating()));
+        holder.textTvShowTitle.setText(TV_SHOW.getName());
+        holder.textTvShowData.setText(activity.getString(R.string.text_tv_show_data, TV_SHOW.getOriginalLanguage(), TV_SHOW.getFirstAirDate()));
+        holder.textTvShowRating.setText(String.valueOf(TV_SHOW.getVoteAverage()));
         Glide.with(holder.itemView)
-                .load(TVSHOW.getPoster())
+                .load(BuildConfig.BASE_URL_POSTER + TV_SHOW.getBackdropPath())
+                .apply(new RequestOptions().placeholder(R.drawable.img_placeholder))
                 .into(holder.imageTvShowPoster);
     }
 

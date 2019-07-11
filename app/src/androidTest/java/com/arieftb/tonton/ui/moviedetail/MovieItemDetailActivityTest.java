@@ -27,7 +27,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-public class MovieDetailActivityTest {
+public class MovieItemDetailActivityTest {
 
     private final Movie movieDummy = Dummy.getDummyMovies().get(0);
     private String movieData;

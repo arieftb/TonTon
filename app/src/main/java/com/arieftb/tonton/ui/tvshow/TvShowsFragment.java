@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,9 +25,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.TvShow;
 import com.arieftb.tonton.ui.tvshowdetail.TvShowDetailActivity;
+import com.arieftb.tonton.utils.DialogHelper;
 import com.arieftb.tonton.utils.OnItemClickListener;
-
-import java.util.List;
+import com.arieftb.tonton.utils.ViewModelFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +35,7 @@ import java.util.List;
 public class TvShowsFragment extends Fragment implements OnItemClickListener {
 
     private RecyclerView recyclerTvShows;
+    private TvShowsViewModel tvShowsViewModel;
 
     public TvShowsFragment() {
         // Required empty public constructor
@@ -43,6 +45,19 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener {
         return new TvShowsFragment();
     }
 
+    @NonNull
+    private static TvShowsViewModel obtainViewModel(FragmentActivity activity) {
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
+        return ViewModelProviders.of(activity, factory).get(TvShowsViewModel.class);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getActivity() != null) {
+            tvShowsViewModel = obtainViewModel(getActivity());
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,17 +78,39 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener {
         super.onActivityCreated(savedInstanceState);
 
         if (getActivity() != null) {
-            TvShowsViewModel tvShowsViewModel = ViewModelProviders.of(getActivity()).get(TvShowsViewModel.class);
-            List<TvShow> tvShows = tvShowsViewModel.getTvShows();
+            onLoading();
+            onTvShowsReceived();
+            onError();
+        }
+    }
 
+    private void onLoading() {
+
+    }
+
+
+    private void onTvShowsReceived() {
+        tvShowsViewModel.getTvShows().observe(getViewLifecycleOwner(), tvShowItems -> {
             TvShowsAdapter tvShowsAdapter = new TvShowsAdapter(getActivity());
-            tvShowsAdapter.setTvShows(tvShows);
+            tvShowsAdapter.setTvShows(tvShowItems);
+            tvShowsAdapter.notifyDataSetChanged();
             tvShowsAdapter.addItemClickListener(this);
 
             recyclerTvShows.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerTvShows.setHasFixedSize(true);
             recyclerTvShows.setAdapter(tvShowsAdapter);
-        }
+        });
+    }
+
+    private void onError() {
+        tvShowsViewModel.getMessageError().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                new DialogHelper(getActivity())
+                        .setMessage(message)
+                        .setPrimaryButton(R.string.btn_title_ok, (dialogInterface, i) -> dialogInterface.dismiss())
+                        .create().show();
+            }
+        });
     }
 
     @Override
@@ -81,6 +118,7 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener {
         TvShow tvShow = (TvShow) object;
         Intent intent = new Intent(getContext(), TvShowDetailActivity.class);
         intent.putExtra(TvShowDetailActivity.TV_SHOW_ID, tvShow.getId());
-        startActivity(intent);
+        //TODO Active This If Ready
+//        startActivity(intent);
     }
 }

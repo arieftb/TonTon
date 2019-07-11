@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.response.movies.Movie;
+import com.arieftb.tonton.model.response.movies.MovieItem;
 import com.arieftb.tonton.ui.moviedetail.MovieDetailActivity;
 import com.arieftb.tonton.utils.DialogHelper;
 import com.arieftb.tonton.utils.OnItemClickListener;
@@ -85,25 +85,20 @@ public class MoviesFragment extends Fragment implements OnItemClickListener, Swi
         super.onActivityCreated(savedInstanceState);
 
         if (getActivity() != null) {
-            moviesViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> progressMoviesLoad.setVisibility(isLoading ? View.VISIBLE : View.GONE));
-
-            moviesViewModel.getMessageError().observe(getViewLifecycleOwner(), message -> {
-                if (message != null) {
-                    new DialogHelper(getActivity())
-                            .setMessage(message)
-                            .setPrimaryButton(R.string.btn_title_ok, (dialogInterface, i) -> dialogInterface.dismiss())
-                            .create().show();
-                }
-            });
+            onLoading();
+            onMoviesReceived();
+            onError();
 
             swipeMoviesReload.setOnRefreshListener(this);
             swipeMoviesReload.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
-
-            onMessageReceived();
         }
     }
 
-    private void onMessageReceived() {
+    private void onLoading() {
+        moviesViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> progressMoviesLoad.setVisibility(isLoading ? View.VISIBLE : View.GONE));
+    }
+
+    private void onMoviesReceived() {
         MoviesAdapter moviesAdapter = new MoviesAdapter(getActivity());
 
         moviesViewModel.getMovies().observe(getViewLifecycleOwner(), movies -> {
@@ -117,9 +112,20 @@ public class MoviesFragment extends Fragment implements OnItemClickListener, Swi
         });
     }
 
+    private void onError() {
+        moviesViewModel.getMessageError().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                new DialogHelper(getActivity())
+                        .setMessage(message)
+                        .setPrimaryButton(R.string.btn_title_ok, (dialogInterface, i) -> dialogInterface.dismiss())
+                        .create().show();
+            }
+        });
+    }
+
     @Override
     public void onItemClick(View view, Object object) {
-        Movie movie = (Movie) object;
+        MovieItem movie = (MovieItem) object;
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.getId());
         startActivity(intent);

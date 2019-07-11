@@ -1,18 +1,16 @@
-/*
- * Developed by arieftb on 7/9/19 11:13 PM.
- * Last Modified 7/9/19 11:10 PM.
- * Copyright (c) 2019. All rights reserved.
- * www.arieftb.com
- */
+package com.arieftb.tonton.model.response.tvshow;
 
-package com.arieftb.tonton.model.response.movies;
+import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 
-public class Movie {
+public class TvShowItem {
+
+	@SerializedName("first_air_date")
+	private String firstAirDate;
 
 	@SerializedName("overview")
 	private String overview;
@@ -20,41 +18,43 @@ public class Movie {
 	@SerializedName("original_language")
 	private String originalLanguage;
 
-	@SerializedName("original_title")
-	private String originalTitle;
-
-	@SerializedName("video")
-	private boolean video;
-
-	@SerializedName("title")
-	private String title;
-
 	@SerializedName("genre_ids")
 	private List<Integer> genreIds;
 
 	@SerializedName("poster_path")
 	private String posterPath;
 
+	@SerializedName("origin_country")
+	private List<String> originCountry;
+
 	@SerializedName("backdrop_path")
 	private String backdropPath;
 
-	@SerializedName("release_date")
-	private String releaseDate;
-
-	@SerializedName("vote_average")
-	private double voteAverage;
+	@SerializedName("original_name")
+	private String originalName;
 
 	@SerializedName("popularity")
 	private double popularity;
 
+	@SerializedName("vote_average")
+	private double voteAverage;
+
+	@SerializedName("name")
+	private String name;
+
 	@SerializedName("id")
 	private int id;
 
-	@SerializedName("adult")
-	private boolean adult;
-
 	@SerializedName("vote_count")
 	private int voteCount;
+
+	public void setFirstAirDate(String firstAirDate){
+		this.firstAirDate = firstAirDate;
+	}
+
+	public String getFirstAirDate(){
+		return firstAirDate;
+	}
 
 	public void setOverview(String overview){
 		this.overview = overview;
@@ -70,30 +70,6 @@ public class Movie {
 
 	public String getOriginalLanguage(){
 		return originalLanguage;
-	}
-
-	public void setOriginalTitle(String originalTitle){
-		this.originalTitle = originalTitle;
-	}
-
-	public String getOriginalTitle(){
-		return originalTitle;
-	}
-
-	public void setVideo(boolean video){
-		this.video = video;
-	}
-
-	public boolean isVideo(){
-		return video;
-	}
-
-	public void setTitle(String title){
-		this.title = title;
-	}
-
-	public String getTitle(){
-		return title;
 	}
 
 	public void setGenreIds(List<Integer> genreIds){
@@ -112,6 +88,14 @@ public class Movie {
 		return posterPath;
 	}
 
+	public void setOriginCountry(List<String> originCountry){
+		this.originCountry = originCountry;
+	}
+
+	public List<String> getOriginCountry(){
+		return originCountry;
+	}
+
 	public void setBackdropPath(String backdropPath){
 		this.backdropPath = backdropPath;
 	}
@@ -120,20 +104,12 @@ public class Movie {
 		return backdropPath;
 	}
 
-	public void setReleaseDate(String releaseDate){
-		this.releaseDate = releaseDate;
+	public void setOriginalName(String originalName){
+		this.originalName = originalName;
 	}
 
-	public String getReleaseDate(){
-		return releaseDate;
-	}
-
-	public void setVoteAverage(double voteAverage){
-		this.voteAverage = voteAverage;
-	}
-
-	public double getVoteAverage(){
-		return voteAverage;
+	public String getOriginalName(){
+		return originalName;
 	}
 
 	public void setPopularity(double popularity){
@@ -144,20 +120,28 @@ public class Movie {
 		return popularity;
 	}
 
+	public void setVoteAverage(double voteAverage){
+		this.voteAverage = voteAverage;
+	}
+
+	public double getVoteAverage(){
+		return voteAverage;
+	}
+
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public String getName(){
+		return name;
+	}
+
 	public void setId(int id){
 		this.id = id;
 	}
 
 	public int getId(){
 		return id;
-	}
-
-	public void setAdult(boolean adult){
-		this.adult = adult;
-	}
-
-	public boolean isAdult(){
-		return adult;
 	}
 
 	public void setVoteCount(int voteCount){
@@ -169,22 +153,22 @@ public class Movie {
 	}
 
 	@Override
+	@NonNull
  	public String toString(){
 		return 
-			"Movie{" +
-			"overview = '" + overview + '\'' + 
+			"TvShowItem{" +
+			"first_air_date = '" + firstAirDate + '\'' + 
+			",overview = '" + overview + '\'' + 
 			",original_language = '" + originalLanguage + '\'' + 
-			",original_title = '" + originalTitle + '\'' + 
-			",video = '" + video + '\'' + 
-			",title = '" + title + '\'' + 
 			",genre_ids = '" + genreIds + '\'' + 
 			",poster_path = '" + posterPath + '\'' + 
+			",origin_country = '" + originCountry + '\'' + 
 			",backdrop_path = '" + backdropPath + '\'' + 
-			",release_date = '" + releaseDate + '\'' + 
-			",vote_average = '" + voteAverage + '\'' + 
+			",original_name = '" + originalName + '\'' + 
 			",popularity = '" + popularity + '\'' + 
+			",vote_average = '" + voteAverage + '\'' + 
+			",name = '" + name + '\'' + 
 			",id = '" + id + '\'' + 
-			",adult = '" + adult + '\'' + 
 			",vote_count = '" + voteCount + '\'' + 
 			"}";
 		}

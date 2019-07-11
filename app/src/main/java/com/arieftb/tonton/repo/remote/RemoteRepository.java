@@ -11,10 +11,12 @@ import android.app.Application;
 
 import com.arieftb.tonton.BuildConfig;
 import com.arieftb.tonton.model.response.movies.MoviesResponse;
+import com.arieftb.tonton.model.response.tvshow.TvShowsResponse;
 import com.arieftb.tonton.network.NetworkClient;
 import com.arieftb.tonton.network.NetworkFailed;
 import com.arieftb.tonton.repo.callback.ConnectionCallback;
 import com.arieftb.tonton.repo.callback.MoviesCallback;
+import com.arieftb.tonton.repo.callback.TvShowCallback;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -63,6 +65,37 @@ public class RemoteRepository {
                     @Override
                     public void onError(Throwable e) {
                         moviesCallback.onMoviesReceived(null);
+                        connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
+                        connectionCallback.onLoading(false);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        connectionCallback.onLoading(false);
+                    }
+                });
+    }
+
+    public void getTvShows(final TvShowCallback tvShowCallback, final ConnectionCallback connectionCallback) {
+        connectionCallback.onLoading(true);
+        networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
+        networkClient.getApiService().getTvShows(BuildConfig.API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<TvShowsResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(TvShowsResponse tvShowsResponse) {
+                        tvShowCallback.onTvShowReceived(tvShowsResponse.getResults());
+                        connectionCallback.onFailed(null);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
                         connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
                         connectionCallback.onLoading(false);
                     }

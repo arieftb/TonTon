@@ -10,6 +10,7 @@ package com.arieftb.tonton.data;
 import androidx.lifecycle.LiveData;
 
 public interface DataSource {
+    void onLoadData();
     LiveData<Boolean> isLoading();
     LiveData<String> onError();
 }
