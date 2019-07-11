@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +37,7 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener {
 
     private RecyclerView recyclerTvShows;
     private TvShowsViewModel tvShowsViewModel;
+    private ProgressBar progressTvShowLoad;
 
     public TvShowsFragment() {
         // Required empty public constructor
@@ -71,6 +73,7 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerTvShows = view.findViewById(R.id.recycler_tv_shows_list);
+        progressTvShowLoad = view.findViewById(R.id.progress_tv_shows_load);
     }
 
     @Override
@@ -85,7 +88,7 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener {
     }
 
     private void onLoading() {
-
+        tvShowsViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> progressTvShowLoad.setVisibility(isLoading ? View.VISIBLE : View.GONE));
     }
 
 
