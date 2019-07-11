@@ -30,7 +30,7 @@ public class RemoteRepository {
     private NetworkFailed networkFailed = new NetworkFailed();
     private final Application application;
 
-    public RemoteRepository(NetworkClient networkClient, Application application) {
+    private RemoteRepository(NetworkClient networkClient, Application application) {
         this.networkClient = networkClient;
         this.application = application;
     }
@@ -57,10 +57,12 @@ public class RemoteRepository {
                     @Override
                     public void onNext(MoviesResponse moviesResponse) {
                         moviesCallback.onMoviesReceived(moviesResponse.getResults());
+                        connectionCallback.onFailed(null);
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        moviesCallback.onMoviesReceived(null);
                         connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
                         connectionCallback.onLoading(false);
                     }

@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.response.movies.Movie;
@@ -33,11 +34,12 @@ import com.arieftb.tonton.utils.ViewModelFactory;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoviesFragment extends Fragment implements OnItemClickListener {
+public class MoviesFragment extends Fragment implements OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerViewMovies;
     private MoviesViewModel moviesViewModel;
     private ProgressBar progressMoviesLoad;
+    private SwipeRefreshLayout swipeMoviesReload;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -75,6 +77,7 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
 
         recyclerViewMovies = view.findViewById(R.id.recycler_movies_list);
         progressMoviesLoad = view.findViewById(R.id.progress_movies_load);
+        swipeMoviesReload = view.findViewById(R.id.swipe_movies_reload);
     }
 
     @Override
@@ -84,23 +87,33 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
         if (getActivity() != null) {
             moviesViewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> progressMoviesLoad.setVisibility(isLoading ? View.VISIBLE : View.GONE));
 
-            moviesViewModel.getMessageError().observe(getViewLifecycleOwner(), message -> new DialogHelper(getActivity())
-                    .setMessage(message)
-                    .setPrimaryButton(R.string.btn_title_ok,
-                            (dialogInterface, i) -> dialogInterface.dismiss()).create().show());
-
-            MoviesAdapter moviesAdapter = new MoviesAdapter(getActivity());
-
-            moviesViewModel.getMovies().observe(getViewLifecycleOwner(), movies -> {
-                moviesAdapter.setMovies(movies);
-                moviesAdapter.notifyDataSetChanged();
-                moviesAdapter.addItemClickListener(this);
-
-                recyclerViewMovies.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerViewMovies.setHasFixedSize(true);
-                recyclerViewMovies.setAdapter(moviesAdapter);
+            moviesViewModel.getMessageError().observe(getViewLifecycleOwner(), message -> {
+                if (message != null) {
+                    new DialogHelper(getActivity())
+                            .setMessage(message)
+                            .setPrimaryButton(R.string.btn_title_ok, (dialogInterface, i) -> dialogInterface.dismiss()).create().show();
+                }
             });
+
+            swipeMoviesReload.setOnRefreshListener(this);
+            swipeMoviesReload.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+
+            onMessageReceived();
         }
+    }
+
+    private void onMessageReceived() {
+        MoviesAdapter moviesAdapter = new MoviesAdapter(getActivity());
+
+        moviesViewModel.getMovies().observe(getViewLifecycleOwner(), movies -> {
+            moviesAdapter.setMovies(movies);
+            moviesAdapter.notifyDataSetChanged();
+            moviesAdapter.addItemClickListener(this);
+
+            recyclerViewMovies.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerViewMovies.setHasFixedSize(true);
+            recyclerViewMovies.setAdapter(moviesAdapter);
+        });
     }
 
     @Override
@@ -109,5 +122,11 @@ public class MoviesFragment extends Fragment implements OnItemClickListener {
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        moviesViewModel.getMoviesData();
+        swipeMoviesReload.setRefreshing(false);
     }
 }

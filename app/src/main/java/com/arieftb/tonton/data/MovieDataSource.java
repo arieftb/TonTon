@@ -14,5 +14,6 @@ import com.arieftb.tonton.model.response.movies.Movie;
 import java.util.List;
 
 public interface MovieDataSource {
-    LiveData<List<Movie>> getMovies();
+    void getMovies();
+    LiveData<List<Movie>> onMoviesReceived();
 }
