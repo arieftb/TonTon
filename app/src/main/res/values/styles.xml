@@ -12,9 +12,19 @@
     <style name="MaterialAppTheme" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@android:color/white</item>
         <item name="colorPrimaryDark">@android:color/white</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="actionBarTheme">@style/CustomActionBar</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="alertDialogTheme">@style/CustomAlertDialogTheme</item>
+    </style>
+
+    <style name="CustomAlertDialogTheme" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/CustomButtonTheme</item>
+        <item name="buttonBarNegativeButtonStyle">@style/CustomButtonTheme</item>
+    </style>
+
+    <style name="CustomButtonTheme" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="CustomActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

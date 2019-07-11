@@ -91,7 +91,8 @@ public class MoviesFragment extends Fragment implements OnItemClickListener, Swi
                 if (message != null) {
                     new DialogHelper(getActivity())
                             .setMessage(message)
-                            .setPrimaryButton(R.string.btn_title_ok, (dialogInterface, i) -> dialogInterface.dismiss()).create().show();
+                            .setPrimaryButton(R.string.btn_title_ok, (dialogInterface, i) -> dialogInterface.dismiss())
+                            .create().show();
                 }
             });
 
