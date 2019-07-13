@@ -22,6 +22,7 @@ public class RemoteObservable {
                   movieEntity.setLang(movieItem.getOriginalLanguage());
                   movieEntity.setReleaseDate(movieItem.getReleaseDate());
                   movieEntity.setPoster(movieItem.getPosterPath());
+                  movieEntity.setVoteAverage(movieItem.getVoteAverage());
                   return movieEntity;
                 })
                 .toList()
@@ -55,6 +56,7 @@ public class RemoteObservable {
                    movieEntity.setReleaseDate(movie.getReleaseDate());
                    movieEntity.setPoster(movie.getPosterPath());
                    movieEntity.setOverview(movie.getOverview());
+                   movieEntity.setVoteAverage(movie.getVoteAverage());
                    return  movieEntity;
                 });
     }
