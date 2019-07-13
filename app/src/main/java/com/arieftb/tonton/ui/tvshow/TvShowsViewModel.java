@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.arieftb.tonton.model.TvShow;
+import com.arieftb.tonton.model.entity.TvShowEntity;
 import com.arieftb.tonton.model.response.tvshow.TvShowItem;
 import com.arieftb.tonton.repo.tvshow.TvShowRepository;
 import com.arieftb.tonton.utils.Dummy;
@@ -29,7 +30,7 @@ public class TvShowsViewModel extends ViewModel {
         tvShowRepository.onLoadData();
     }
 
-    LiveData<List<TvShowItem>> getTvShows() {
+    LiveData<List<TvShowEntity>> getTvShows() {
         return tvShowRepository.onTvShowsReceived();
     }
 

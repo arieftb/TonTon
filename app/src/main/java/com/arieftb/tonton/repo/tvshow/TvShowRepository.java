@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.arieftb.tonton.data.DataSource;
 import com.arieftb.tonton.data.TvShowDataSource;
-import com.arieftb.tonton.model.response.tvshow.TvShowItem;
+import com.arieftb.tonton.model.entity.TvShowEntity;
 import com.arieftb.tonton.repo.callback.ConnectionCallback;
 import com.arieftb.tonton.repo.remote.RemoteRepository;
 
@@ -18,7 +18,7 @@ public class TvShowRepository implements TvShowDataSource, DataSource {
     private final RemoteRepository remoteRepository;
     private MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>();
     private MutableLiveData<String> errorData = new MutableLiveData<>();
-    private MutableLiveData<List<TvShowItem>> tvShowItems = new MutableLiveData<>();
+    private MutableLiveData<List<TvShowEntity>> tvShowItems = new MutableLiveData<>();
 
     private TvShowRepository(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
@@ -62,7 +62,7 @@ public class TvShowRepository implements TvShowDataSource, DataSource {
     }
 
     @Override
-    public LiveData<List<TvShowItem>> onTvShowsReceived() {
+    public LiveData<List<TvShowEntity>> onTvShowsReceived() {
         return tvShowItems;
     }
 }

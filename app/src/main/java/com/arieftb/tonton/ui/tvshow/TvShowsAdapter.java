@@ -19,10 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.arieftb.tonton.BuildConfig;
 import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.response.tvshow.TvShowItem;
+import com.arieftb.tonton.model.entity.TvShowEntity;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
@@ -31,18 +30,18 @@ import java.util.List;
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowViewHolder> {
 
     private OnItemClickListener onItemClickListener;
-    private final List<TvShowItem> tvShows = new ArrayList<>();
+    private final List<TvShowEntity> tvShows = new ArrayList<>();
     private final Activity activity;
 
     TvShowsAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    private List<TvShowItem> getTvShows() {
+    private List<TvShowEntity> getTvShows() {
         return tvShows;
     }
 
-    void setTvShows(List<TvShowItem> tvShows) {
+    void setTvShows(List<TvShowEntity> tvShows) {
         if (tvShows == null) return;
         this.tvShows.clear();
         this.tvShows.addAll(tvShows);
@@ -62,13 +61,13 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
 
     @Override
     public void onBindViewHolder(@NonNull TvShowViewHolder holder, int position) {
-        final TvShowItem TV_SHOW = getTvShows().get(position);
+        final TvShowEntity TV_SHOW = getTvShows().get(position);
 
-        holder.textTvShowTitle.setText(TV_SHOW.getName());
-        holder.textTvShowData.setText(activity.getString(R.string.text_tv_show_data, TV_SHOW.getOriginalLanguage(), TV_SHOW.getFirstAirDate()));
+        holder.textTvShowTitle.setText(TV_SHOW.getTitle());
+        holder.textTvShowData.setText(activity.getString(R.string.text_tv_show_data, TV_SHOW.getLang(), TV_SHOW.getReleaseDate()));
         holder.textTvShowRating.setText(String.valueOf(TV_SHOW.getVoteAverage()));
         Glide.with(holder.itemView)
-                .load(BuildConfig.BASE_URL_POSTER + TV_SHOW.getPosterPath())
+                .load(BuildConfig.BASE_URL_POSTER + TV_SHOW.getPoster())
                 .apply(new RequestOptions().placeholder(R.drawable.img_placeholder))
                 .into(holder.imageTvShowPoster);
     }

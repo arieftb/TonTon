@@ -24,7 +24,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-
 public class RemoteRepository {
     private static RemoteRepository INSTANCE;
     private NetworkClient networkClient;
@@ -47,7 +46,7 @@ public class RemoteRepository {
     public void getMovies(final MoviesCallback moviesCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
-        compositeDisposable.add(RemoteObservable.getMovieEntity(networkClient)
+        compositeDisposable.add(RemoteObservable.getMovieMap(networkClient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
@@ -62,31 +61,42 @@ public class RemoteRepository {
     public void getTvShows(final TvShowCallback tvShowCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
-        networkClient.getApiService().getTvShows(BuildConfig.API_KEY)
+        compositeDisposable.add(RemoteObservable.getTvShowMap(networkClient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<TvShowsResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        compositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(TvShowsResponse tvShowsResponse) {
-                        tvShowCallback.onTvShowReceived(tvShowsResponse.getResults());
-                        connectionCallback.onFailed(null);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
-                        connectionCallback.onLoading(false);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        connectionCallback.onLoading(false);
-                    }
-                });
+                .doOnSubscribe( d -> connectionCallback.onLoading(true))
+                .doOnComplete( () -> connectionCallback.onLoading(false))
+                .subscribe(tvShowCallback::onTvShowReceived, e-> {
+                    connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
+                    connectionCallback.onLoading(false);
+                })
+        );
+//        networkClient.getApiService().getTvShows(BuildConfig.API_KEY)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<TvShowsResponse>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        compositeDisposable.add(d);
+//                    }
+//
+//                    @Override
+//                    public void onNext(TvShowsResponse tvShowsResponse) {
+//                        tvShowCallback.onTvShowReceived(tvShowsResponse.getResults());
+//                        connectionCallback.onFailed(null);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
+//                        connectionCallback.onLoading(false);
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        connectionCallback.onLoading(false);
+//                    }
+//                });
     }
 }
+
