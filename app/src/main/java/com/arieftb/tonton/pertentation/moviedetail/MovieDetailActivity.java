@@ -61,7 +61,11 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void onMovieReceived() {
-        movieDetailViewModel.getMovie().observe(this, this::setMovieDetail);
+        movieDetailViewModel.getMovie().observe(this, movieEntity -> {
+            if (movieEntity != null) {
+                setMovieDetail(movieEntity);
+            }
+        });
     }
 
     private void onError() {

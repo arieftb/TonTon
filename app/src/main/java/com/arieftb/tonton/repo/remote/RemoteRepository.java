@@ -49,7 +49,10 @@ public class RemoteRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
                 .doOnComplete( () -> connectionCallback.onLoading(false))
-                .subscribe(moviesCallback::onMoviesReceived, e -> {
+                .subscribe(movieEntities -> {
+                    moviesCallback.onMoviesReceived(movieEntities);
+                    connectionCallback.onFailed(null);
+                }, e -> {
                     connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
                     connectionCallback.onLoading(false);
                 })
@@ -79,7 +82,11 @@ public class RemoteRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
                 .doOnComplete( () -> connectionCallback.onLoading(false))
-                .subscribe(movieCallback::onMovieReceived, e-> {
+                .subscribe(movieEntity -> {
+                    movieCallback.onMovieReceived(movieEntity);
+                    connectionCallback.onFailed(null);
+                }, e-> {
+                    movieCallback.onMovieReceived(null);
                     connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
                     connectionCallback.onLoading(false);
                 })
