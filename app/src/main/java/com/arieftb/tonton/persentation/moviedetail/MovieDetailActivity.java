@@ -78,7 +78,7 @@ public class MovieDetailActivity extends AppCompatActivity implements SwipeRefre
     }
 
     private void onError() {
-        movieDetailViewModel.getErroMessage().observe(this, errorMessage -> {
+        movieDetailViewModel.getErrorMessage().observe(this, errorMessage -> {
             if (errorMessage != null) {
                 constraintMovieContent.setVisibility(View.VISIBLE);
                 new DialogHelper(this)

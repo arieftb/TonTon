@@ -17,6 +17,7 @@ import com.arieftb.tonton.repo.callback.ConnectionCallback;
 import com.arieftb.tonton.repo.callback.MovieCallback;
 import com.arieftb.tonton.repo.callback.MoviesCallback;
 import com.arieftb.tonton.repo.callback.TvShowCallback;
+import com.arieftb.tonton.repo.callback.TvShowsCallback;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -59,7 +60,7 @@ public class RemoteRepository {
         );
     }
 
-    public void getTvShows(final TvShowCallback tvShowCallback, final ConnectionCallback connectionCallback) {
+    public void getTvShows(final TvShowsCallback tvShowsCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
         compositeDisposable.add(RemoteObservable.getTvShowsMap(networkClient)
@@ -67,7 +68,7 @@ public class RemoteRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
                 .doOnComplete( () -> connectionCallback.onLoading(false))
-                .subscribe(tvShowCallback::onTvShowReceived, e-> {
+                .subscribe(tvShowsCallback::onTvShowReceived, e-> {
                     connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
                     connectionCallback.onLoading(false);
                 })
@@ -87,6 +88,25 @@ public class RemoteRepository {
                     connectionCallback.onFailed(null);
                 }, e-> {
                     movieCallback.onMovieReceived(null);
+                    connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
+                    connectionCallback.onLoading(false);
+                })
+        );
+    }
+
+    public void getTvShow(int id, final TvShowCallback tvShowCallback, final ConnectionCallback connectionCallback) {
+        connectionCallback.onLoading(true);
+        networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
+        compositeDisposable.add(RemoteObservable.getTvShowMap(networkClient, id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe( d -> connectionCallback.onLoading(true))
+                .doOnComplete( () -> connectionCallback.onLoading(false))
+                .subscribe(tvShowEntity -> {
+                    tvShowCallback.onTvShowReceived(tvShowEntity);
+                    connectionCallback.onFailed(null);
+                }, e-> {
+                    tvShowCallback.onTvShowReceived(null);
                     connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
                     connectionCallback.onLoading(false);
                 })

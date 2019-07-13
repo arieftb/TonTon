@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.arieftb.tonton.di.Injection;
 import com.arieftb.tonton.persentation.moviedetail.MovieDetailViewModel;
+import com.arieftb.tonton.persentation.tvshowdetail.TvShowDetailViewModel;
 import com.arieftb.tonton.repo.movie.MovieRepository;
 import com.arieftb.tonton.repo.tvshow.TvShowRepository;
 import com.arieftb.tonton.persentation.movie.MoviesViewModel;
@@ -52,6 +53,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new TvShowsViewModel(tvShowRepository);
         } else if (modelClass.isAssignableFrom(MovieDetailViewModel.class)) {
             return (T) new MovieDetailViewModel(movieRepository);
+        } else if (modelClass.isAssignableFrom(TvShowDetailViewModel.class)) {
+            return (T) new TvShowDetailViewModel(tvShowRepository);
         }
 
         throw new IllegalArgumentException(modelClass.getName());

@@ -19,6 +19,7 @@ public class TvShowRepository implements TvShowDataSource, DataSource {
     private MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>();
     private MutableLiveData<String> errorData = new MutableLiveData<>();
     private MutableLiveData<List<TvShowEntity>> tvShowItems = new MutableLiveData<>();
+    private MutableLiveData<TvShowEntity> tvShow = new MutableLiveData<>();
 
     private TvShowRepository(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
@@ -62,7 +63,27 @@ public class TvShowRepository implements TvShowDataSource, DataSource {
     }
 
     @Override
+    public void getTvShow(int id) {
+        remoteRepository.getTvShow(id, tvShow::postValue, new ConnectionCallback() {
+            @Override
+            public void onLoading(Boolean isLoading) {
+                isLoadingData.postValue(isLoading);
+            }
+
+            @Override
+            public void onFailed(String message) {
+                errorData.postValue(message);
+            }
+        });
+    }
+
+    @Override
     public LiveData<List<TvShowEntity>> onTvShowsReceived() {
         return tvShowItems;
+    }
+
+    @Override
+    public LiveData<TvShowEntity> onTvShowReceived() {
+        return tvShow;
     }
 }

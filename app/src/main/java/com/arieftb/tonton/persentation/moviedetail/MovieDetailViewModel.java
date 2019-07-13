@@ -32,7 +32,7 @@ public class MovieDetailViewModel extends ViewModel {
         return movieRepository.isLoading();
     }
 
-    LiveData<String> getErroMessage() {
+    LiveData<String> getErrorMessage() {
         return movieRepository.onError();
     }
 }

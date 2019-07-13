@@ -29,6 +29,6 @@ public interface NetworkEndPoint {
                                              @Query("api_key") String token);
 
     @GET("tv/{tv_id}")
-    Observable<TvShowDetailResponse> getTvShow(@Path("movie_id") int id,
+    Observable<TvShowDetailResponse> getTvShow(@Path("tv_id") int id,
                                               @Query("api_key") String token);
 }

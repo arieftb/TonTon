@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface TvShowDataSource {
     void getTvShows();
+    void getTvShow(int id);
     LiveData<List<TvShowEntity>> onTvShowsReceived();
+    LiveData<TvShowEntity> onTvShowReceived();
 }
