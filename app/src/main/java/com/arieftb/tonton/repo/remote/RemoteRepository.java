@@ -10,7 +10,7 @@ package com.arieftb.tonton.repo.remote;
 import android.app.Application;
 
 import com.arieftb.tonton.BuildConfig;
-import com.arieftb.tonton.model.response.movies.MoviesResponse;
+import com.arieftb.tonton.data.RemoteObservable;
 import com.arieftb.tonton.model.response.tvshow.TvShowsResponse;
 import com.arieftb.tonton.network.NetworkClient;
 import com.arieftb.tonton.network.NetworkFailed;
@@ -47,33 +47,16 @@ public class RemoteRepository {
     public void getMovies(final MoviesCallback moviesCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
-        networkClient.getApiService().getMovies(BuildConfig.API_KEY)
+        compositeDisposable.add(RemoteObservable.getMovieEntity(networkClient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MoviesResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        compositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(MoviesResponse moviesResponse) {
-                        moviesCallback.onMoviesReceived(moviesResponse.getResults());
-                        connectionCallback.onFailed(null);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        moviesCallback.onMoviesReceived(null);
-                        connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
-                        connectionCallback.onLoading(false);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        connectionCallback.onLoading(false);
-                    }
-                });
+                .doOnSubscribe( d -> connectionCallback.onLoading(true))
+                .doOnComplete( () -> connectionCallback.onLoading(false))
+                .subscribe(moviesCallback::onMoviesReceived, e -> {
+                    connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
+                    connectionCallback.onLoading(false);
+                })
+        );
     }
 
     public void getTvShows(final TvShowCallback tvShowCallback, final ConnectionCallback connectionCallback) {

@@ -7,10 +7,10 @@
 
 package com.arieftb.tonton.repo.callback;
 
-import com.arieftb.tonton.model.response.movies.MovieItem;
+import com.arieftb.tonton.model.entity.MovieEntity;
 
 import java.util.List;
 
 public interface MoviesCallback {
-    void onMoviesReceived(List<MovieItem> movies);
+    void onMoviesReceived(List<MovieEntity> movies);
 }

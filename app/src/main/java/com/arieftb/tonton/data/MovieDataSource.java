@@ -9,10 +9,11 @@ package com.arieftb.tonton.data;
 
 import androidx.lifecycle.LiveData;
 
+import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.model.response.movies.MovieItem;
 
 import java.util.List;
 
 public interface MovieDataSource {
-    LiveData<List<MovieItem>> onMoviesReceived();
+    LiveData<List<MovieEntity>> onMoviesReceived();
 }

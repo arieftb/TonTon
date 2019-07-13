@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.arieftb.tonton.data.DataSource;
 import com.arieftb.tonton.data.MovieDataSource;
+import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.model.response.movies.MovieItem;
 import com.arieftb.tonton.repo.callback.ConnectionCallback;
 import com.arieftb.tonton.repo.remote.RemoteRepository;
@@ -25,7 +26,7 @@ public class MovieRepository implements MovieDataSource, DataSource {
     private final RemoteRepository remoteRepository;
     private MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>();
     private MutableLiveData<String> errorData = new MutableLiveData<>();
-    private MutableLiveData<List<MovieItem>> moviesData = new MutableLiveData<>();
+    private MutableLiveData<List<MovieEntity>> moviesData = new MutableLiveData<>();
 
     private MovieRepository(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
@@ -45,7 +46,7 @@ public class MovieRepository implements MovieDataSource, DataSource {
 
     @Override
     public void onLoadData() {
-        remoteRepository.getMovies(moviesData::postValue, new ConnectionCallback() {
+        remoteRepository.getMovies(value -> moviesData.postValue(value), new ConnectionCallback() {
             @Override
             public void onLoading(Boolean isLoading) {
                 isLoadingData.postValue(isLoading);
@@ -70,7 +71,7 @@ public class MovieRepository implements MovieDataSource, DataSource {
     }
 
     @Override
-    public LiveData<List<MovieItem>> onMoviesReceived() {
+    public LiveData<List<MovieEntity>> onMoviesReceived() {
         return moviesData;
     }
 }

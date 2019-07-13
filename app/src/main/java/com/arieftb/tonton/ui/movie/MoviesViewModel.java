@@ -10,6 +10,7 @@ package com.arieftb.tonton.ui.movie;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.model.response.movies.MovieItem;
 import com.arieftb.tonton.repo.movie.MovieRepository;
 
@@ -25,7 +26,7 @@ public class MoviesViewModel extends ViewModel {
 
     void getMoviesData() { movieRepository.onLoadData(); }
 
-    LiveData<List<MovieItem>> getMovies() { return movieRepository.onMoviesReceived(); }
+    LiveData<List<MovieEntity>> getMovies() { return movieRepository.onMoviesReceived(); }
 
     LiveData<Boolean> getIsLoading() {
         return movieRepository.isLoading();
