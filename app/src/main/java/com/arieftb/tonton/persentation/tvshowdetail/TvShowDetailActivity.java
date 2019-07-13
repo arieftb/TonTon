@@ -16,7 +16,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arieftb.tonton.BuildConfig;
 import com.arieftb.tonton.R;
@@ -26,12 +28,15 @@ import com.arieftb.tonton.utils.ViewModelFactory;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-public class TvShowDetailActivity extends AppCompatActivity {
+public class TvShowDetailActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     public final static String TV_SHOW_ID = "TV_SHOW_ID";
 
+    private int tvShowId;
     private TextView textTvShowTitle, textTvShowData, textTvShowRating, textTvShowDescription;
     private ImageView imageTvShowBanner, imageTvShowPoster;
     private ProgressBar progressTvShowRating;
+    private SwipeRefreshLayout swipeTvShowReload;
+    private ConstraintLayout constraintTvShowContent;
     private TvShowDetailViewModel tvShowDetailViewModel;
 
     @NonNull
@@ -50,7 +55,7 @@ public class TvShowDetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        int tvShowId = getIntent().getIntExtra(TV_SHOW_ID, 0);
+        tvShowId = getIntent().getIntExtra(TV_SHOW_ID, 0);
         tvShowDetailViewModel = obtainViewModel(this);
         tvShowDetailViewModel.getTvShowDetail(tvShowId);
 
@@ -60,24 +65,33 @@ public class TvShowDetailActivity extends AppCompatActivity {
     }
 
     private void onTvDetailReceived() {
-        tvShowDetailViewModel.getTvShow().observe(this, this::setTvShowDetail);
+        tvShowDetailViewModel.getTvShow().observe(this, tvShowEntity -> {
+            if (tvShowEntity != null) {
+                setTvShowDetail(tvShowEntity);
+            } else {
+                constraintTvShowContent.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void onError() {
         tvShowDetailViewModel.getErrorMessage().observe(this, errorMessage -> {
-            if (errorMessage != null) {
-                //                    constraintMovieContent.setVisibility(View.VISIBLE);
-                new DialogHelper(this)
-                        .setMessage(errorMessage)
-                        .setPrimaryButton(R.string.btn_title_ok, (dialogInterface, i) -> dialogInterface.dismiss())
-                        .create().show();
-            }
-            }
+                    if (errorMessage != null) {
+                        constraintTvShowContent.setVisibility(View.VISIBLE);
+                        new DialogHelper(this)
+                                .setMessage(errorMessage)
+                                .setPrimaryButton(R.string.btn_title_ok, (dialogInterface, i) -> dialogInterface.dismiss())
+                                .create().show();
+                    }
+                }
         );
     }
 
     private void onLoading() {
-
+        tvShowDetailViewModel.getIsLoading().observe(this, isLoading -> {
+            swipeTvShowReload.setRefreshing(isLoading);
+            constraintTvShowContent.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        });
     }
 
     @Override
@@ -95,6 +109,11 @@ public class TvShowDetailActivity extends AppCompatActivity {
         imageTvShowBanner = findViewById(R.id.image_tv_show_detail_banner);
         imageTvShowPoster = findViewById(R.id.image_tv_show_detail_poster);
         progressTvShowRating = findViewById(R.id.progress_tv_show_detail_rating);
+        swipeTvShowReload = findViewById(R.id.swipe_tv_show_detail_reload);
+        constraintTvShowContent = findViewById(R.id.constrain_tv_show_detail_content);
+
+        swipeTvShowReload.setOnRefreshListener(this);
+        swipeTvShowReload.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
     }
 
 
@@ -113,5 +132,10 @@ public class TvShowDetailActivity extends AppCompatActivity {
                 .load(BuildConfig.BASE_URL_POSTER + poster)
                 .apply(new RequestOptions().placeholder(R.drawable.img_placeholder))
                 .into(imageView);
+    }
+
+    @Override
+    public void onRefresh() {
+        tvShowDetailViewModel.getTvShowDetail(tvShowId);
     }
 }
