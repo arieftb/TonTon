@@ -8,10 +8,12 @@
 package com.arieftb.tonton.network;
 
 import com.arieftb.tonton.model.response.movie.MoviesResponse;
+import com.arieftb.tonton.model.response.moviedetail.MovieDetailResponse;
 import com.arieftb.tonton.model.response.tvshow.TvShowsResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface NetworkEndPoint {
@@ -20,4 +22,8 @@ public interface NetworkEndPoint {
 
     @GET("discover/tv")
     Observable<TvShowsResponse> getTvShows(@Query("api_key") String token);
+
+    @GET("movie/{movie_id}")
+    Observable<MovieDetailResponse> getMovie(@Path("movie_id") int id,
+                                             @Query("api_key") String token);
 }

@@ -12,7 +12,7 @@ import java.util.List;
 import io.reactivex.Observable;
 
 public class RemoteObservable {
-    public static Observable<List<MovieEntity>> getMovieMap(NetworkClient networkClient) {
+    public static Observable<List<MovieEntity>> getMoviesMap(NetworkClient networkClient) {
         return networkClient.getApiService().getMovies(BuildConfig.API_KEY)
                 .flatMapIterable(MoviesResponse::getResults)
                 .map(movieItem -> {
@@ -28,7 +28,7 @@ public class RemoteObservable {
                 .toObservable();
     }
 
-    public static Observable<List<TvShowEntity>> getTvShowMap(NetworkClient networkClient) {
+    public static Observable<List<TvShowEntity>> getTvShowsMap(NetworkClient networkClient) {
         return networkClient.getApiService().getTvShows(BuildConfig.API_KEY)
                 .flatMapIterable(TvShowsResponse::getResults)
                 .map(tvShowItem -> {
@@ -43,5 +43,19 @@ public class RemoteObservable {
                 })
                 .toList()
                 .toObservable();
+    }
+
+    public static Observable<MovieEntity> getMovieMap(NetworkClient networkClient, int id){
+        return networkClient.getApiService().getMovie(id, BuildConfig.API_KEY)
+                .map(movie -> {
+                   MovieEntity movieEntity = new MovieEntity();
+                   movieEntity.setId(movie.getId());
+                   movieEntity.setTitle(movie.getTitle());
+                   movieEntity.setLang(movie.getOriginalLanguage());
+                   movieEntity.setReleaseDate(movie.getReleaseDate());
+                   movieEntity.setPoster(movie.getPosterPath());
+                   movieEntity.setOverview(movie.getOverview());
+                   return  movieEntity;
+                });
     }
 }

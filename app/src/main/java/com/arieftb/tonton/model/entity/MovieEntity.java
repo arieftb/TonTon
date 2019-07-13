@@ -10,8 +10,17 @@ public class MovieEntity implements Parcelable {
     private double voteAverage;
     private String poster;
     private String releaseDate;
+    private String overview;
 
     public MovieEntity() {
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public String getReleaseDate() {
@@ -76,6 +85,7 @@ public class MovieEntity implements Parcelable {
         dest.writeDouble(this.voteAverage);
         dest.writeString(this.poster);
         dest.writeString(this.releaseDate);
+        dest.writeString(this.overview);
     }
 
     protected MovieEntity(Parcel in) {
@@ -85,6 +95,7 @@ public class MovieEntity implements Parcelable {
         this.voteAverage = in.readDouble();
         this.poster = in.readString();
         this.releaseDate = in.readString();
+        this.overview = in.readString();
     }
 
     public static final Creator<MovieEntity> CREATOR = new Creator<MovieEntity>() {

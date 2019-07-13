@@ -11,17 +11,14 @@ import android.app.Application;
 
 import com.arieftb.tonton.BuildConfig;
 import com.arieftb.tonton.data.RemoteObservable;
-import com.arieftb.tonton.model.response.tvshow.TvShowsResponse;
 import com.arieftb.tonton.network.NetworkClient;
 import com.arieftb.tonton.network.NetworkFailed;
 import com.arieftb.tonton.repo.callback.ConnectionCallback;
 import com.arieftb.tonton.repo.callback.MoviesCallback;
 import com.arieftb.tonton.repo.callback.TvShowCallback;
 
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RemoteRepository {
@@ -46,7 +43,7 @@ public class RemoteRepository {
     public void getMovies(final MoviesCallback moviesCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
-        compositeDisposable.add(RemoteObservable.getMovieMap(networkClient)
+        compositeDisposable.add(RemoteObservable.getMoviesMap(networkClient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
@@ -61,7 +58,7 @@ public class RemoteRepository {
     public void getTvShows(final TvShowCallback tvShowCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
-        compositeDisposable.add(RemoteObservable.getTvShowMap(networkClient)
+        compositeDisposable.add(RemoteObservable.getTvShowsMap(networkClient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
