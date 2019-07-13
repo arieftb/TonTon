@@ -49,7 +49,8 @@ dependencies {
 
 //    Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifeCycleVersion"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifeCycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifeCycleVersion"
+//    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifeCycleVersion"
 
 //    Glide
     implementation("com.github.bumptech.glide:glide:$glideVersion") {
