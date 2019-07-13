@@ -23,7 +23,7 @@ public class MoviesViewModel extends ViewModel {
         getMoviesData();
     }
 
-    void getMoviesData() { movieRepository.onLoadData(); }
+    void getMoviesData() { movieRepository.getMovies(); }
 
     LiveData<List<MovieEntity>> getMovies() { return movieRepository.onMoviesReceived(); }
 

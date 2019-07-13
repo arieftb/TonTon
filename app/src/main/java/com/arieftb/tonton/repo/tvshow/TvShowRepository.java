@@ -37,7 +37,17 @@ public class TvShowRepository implements TvShowDataSource, DataSource {
     }
 
     @Override
-    public void onLoadData() {
+    public LiveData<Boolean> isLoading() {
+        return isLoadingData;
+    }
+
+    @Override
+    public LiveData<String> onError() {
+        return errorData;
+    }
+
+    @Override
+    public void getTvShows() {
         remoteRepository.getTvShows(tvShowItems::postValue, new ConnectionCallback() {
             @Override
             public void onLoading(Boolean isLoading) {
@@ -49,16 +59,6 @@ public class TvShowRepository implements TvShowDataSource, DataSource {
                 errorData.postValue(message);
             }
         });
-    }
-
-    @Override
-    public LiveData<Boolean> isLoading() {
-        return isLoadingData;
-    }
-
-    @Override
-    public LiveData<String> onError() {
-        return errorData;
     }
 
     @Override

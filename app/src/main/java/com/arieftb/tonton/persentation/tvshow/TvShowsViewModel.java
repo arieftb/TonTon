@@ -24,7 +24,7 @@ public class TvShowsViewModel extends ViewModel {
     }
 
     void loadData() {
-        tvShowRepository.onLoadData();
+        tvShowRepository.getTvShows();
     }
 
     LiveData<List<TvShowEntity>> getTvShows() {

@@ -44,9 +44,19 @@ public class MovieRepository implements MovieDataSource, DataSource {
         return INSTANCE;
     }
 
+    @Override
+    public LiveData<Boolean> isLoading() {
+        return isLoadingData;
+    }
 
     @Override
-    public void onLoadData() {
+    public LiveData<String> onError() {
+        return errorData;
+    }
+
+
+    @Override
+    public void getMovies() {
         remoteRepository.getMovies(value -> moviesData.postValue(value), new ConnectionCallback() {
             @Override
             public void onLoading(Boolean isLoading) {
@@ -59,17 +69,6 @@ public class MovieRepository implements MovieDataSource, DataSource {
             }
         });
     }
-
-    @Override
-    public LiveData<Boolean> isLoading() {
-        return isLoadingData;
-    }
-
-    @Override
-    public LiveData<String> onError() {
-        return errorData;
-    }
-
 
     @Override
     public void getMovieDetail(int id) {
