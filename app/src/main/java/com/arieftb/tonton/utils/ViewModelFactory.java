@@ -14,11 +14,11 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.arieftb.tonton.di.Injection;
-import com.arieftb.tonton.pertentation.moviedetail.MovieDetailViewModel;
+import com.arieftb.tonton.persentation.moviedetail.MovieDetailViewModel;
 import com.arieftb.tonton.repo.movie.MovieRepository;
 import com.arieftb.tonton.repo.tvshow.TvShowRepository;
-import com.arieftb.tonton.pertentation.movie.MoviesViewModel;
-import com.arieftb.tonton.pertentation.tvshow.TvShowsViewModel;
+import com.arieftb.tonton.persentation.movie.MoviesViewModel;
+import com.arieftb.tonton.persentation.tvshow.TvShowsViewModel;
 
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private static volatile ViewModelFactory INSTANCE;
