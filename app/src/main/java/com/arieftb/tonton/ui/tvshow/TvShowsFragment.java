@@ -17,11 +17,13 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.TvShow;
@@ -33,11 +35,12 @@ import com.arieftb.tonton.utils.ViewModelFactory;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TvShowsFragment extends Fragment implements OnItemClickListener {
+public class TvShowsFragment extends Fragment implements OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerTvShows;
     private TvShowsViewModel tvShowsViewModel;
     private ProgressBar progressTvShowLoad;
+    private SwipeRefreshLayout swipeTvShowsReload;
 
     public TvShowsFragment() {
         // Required empty public constructor
@@ -74,6 +77,7 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener {
 
         recyclerTvShows = view.findViewById(R.id.recycler_tv_shows_list);
         progressTvShowLoad = view.findViewById(R.id.progress_tv_shows_load);
+        swipeTvShowsReload = view.findViewById(R.id.swipe_tv_shows_reload);
     }
 
     @Override
@@ -84,6 +88,9 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener {
             onLoading();
             onTvShowsReceived();
             onError();
+
+            swipeTvShowsReload.setOnRefreshListener(this);
+            swipeTvShowsReload.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         }
     }
 
@@ -123,5 +130,11 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener {
         intent.putExtra(TvShowDetailActivity.TV_SHOW_ID, tvShow.getId());
         //TODO Active This If Ready
 //        startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        tvShowsViewModel.loadData();
+        swipeTvShowsReload.setRefreshing(false);
     }
 }

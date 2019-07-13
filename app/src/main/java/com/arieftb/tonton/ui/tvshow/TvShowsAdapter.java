@@ -22,6 +22,7 @@ import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.response.tvshow.TvShowItem;
 import com.arieftb.tonton.utils.OnItemClickListener;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.TvShowVi
         holder.textTvShowData.setText(activity.getString(R.string.text_tv_show_data, TV_SHOW.getOriginalLanguage(), TV_SHOW.getFirstAirDate()));
         holder.textTvShowRating.setText(String.valueOf(TV_SHOW.getVoteAverage()));
         Glide.with(holder.itemView)
-                .load(BuildConfig.BASE_URL_POSTER + TV_SHOW.getBackdropPath())
+                .load(BuildConfig.BASE_URL_POSTER + TV_SHOW.getPosterPath())
                 .apply(new RequestOptions().placeholder(R.drawable.img_placeholder))
                 .into(holder.imageTvShowPoster);
     }

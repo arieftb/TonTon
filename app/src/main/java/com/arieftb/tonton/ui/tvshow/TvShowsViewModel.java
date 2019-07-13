@@ -25,11 +25,7 @@ public class TvShowsViewModel extends ViewModel {
         loadData();
     }
 
-//    public List<TvShow> getTvShows() {
-//        return Dummy.getDummyTvShows();
-//    }
-
-    private void loadData() {
+    void loadData() {
         tvShowRepository.onLoadData();
     }
 
@@ -37,7 +33,7 @@ public class TvShowsViewModel extends ViewModel {
         return tvShowRepository.onTvShowsReceived();
     }
 
-    public LiveData<Boolean> getIsLoading() {
+    LiveData<Boolean> getIsLoading() {
         return tvShowRepository.isLoading();
     }
 
