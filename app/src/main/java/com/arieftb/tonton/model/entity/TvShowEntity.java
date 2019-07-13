@@ -10,6 +10,15 @@ public class TvShowEntity implements Parcelable {
     private double voteAverage;
     private String poster;
     private String releaseDate;
+    private String overview;
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
 
     public TvShowEntity() {
 
@@ -77,6 +86,7 @@ public class TvShowEntity implements Parcelable {
         dest.writeDouble(this.voteAverage);
         dest.writeString(this.poster);
         dest.writeString(this.releaseDate);
+        dest.writeString(this.overview);
     }
 
     private TvShowEntity(Parcel in) {
@@ -86,6 +96,7 @@ public class TvShowEntity implements Parcelable {
         this.voteAverage = in.readDouble();
         this.poster = in.readString();
         this.releaseDate = in.readString();
+        this.overview = in.readString();
     }
 
     public static final Parcelable.Creator<TvShowEntity> CREATOR = new Parcelable.Creator<TvShowEntity>() {

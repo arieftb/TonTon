@@ -29,6 +29,21 @@ public class RemoteObservable {
                 .toObservable();
     }
 
+    public static Observable<MovieEntity> getMovieMap(NetworkClient networkClient, int id){
+        return networkClient.getApiService().getMovie(id, BuildConfig.API_KEY)
+                .map(movie -> {
+                    MovieEntity movieEntity = new MovieEntity();
+                    movieEntity.setId(movie.getId());
+                    movieEntity.setTitle(movie.getTitle());
+                    movieEntity.setLang(movie.getOriginalLanguage());
+                    movieEntity.setReleaseDate(movie.getReleaseDate());
+                    movieEntity.setPoster(movie.getPosterPath());
+                    movieEntity.setOverview(movie.getOverview());
+                    movieEntity.setVoteAverage(movie.getVoteAverage());
+                    return  movieEntity;
+                });
+    }
+
     public static Observable<List<TvShowEntity>> getTvShowsMap(NetworkClient networkClient) {
         return networkClient.getApiService().getTvShows(BuildConfig.API_KEY)
                 .flatMapIterable(TvShowsResponse::getResults)
@@ -46,18 +61,18 @@ public class RemoteObservable {
                 .toObservable();
     }
 
-    public static Observable<MovieEntity> getMovieMap(NetworkClient networkClient, int id){
-        return networkClient.getApiService().getMovie(id, BuildConfig.API_KEY)
-                .map(movie -> {
-                   MovieEntity movieEntity = new MovieEntity();
-                   movieEntity.setId(movie.getId());
-                   movieEntity.setTitle(movie.getTitle());
-                   movieEntity.setLang(movie.getOriginalLanguage());
-                   movieEntity.setReleaseDate(movie.getReleaseDate());
-                   movieEntity.setPoster(movie.getPosterPath());
-                   movieEntity.setOverview(movie.getOverview());
-                   movieEntity.setVoteAverage(movie.getVoteAverage());
-                   return  movieEntity;
+    public static Observable<TvShowEntity> getTvShowMap(NetworkClient networkClient, int id){
+        return networkClient.getApiService().getTvShow(id, BuildConfig.API_KEY)
+                .map(tv -> {
+                    TvShowEntity tvShowEntity = new TvShowEntity();
+                    tvShowEntity.setId(tv.getId());
+                    tvShowEntity.setTitle(tv.getName());
+                    tvShowEntity.setLang(tv.getOriginalLanguage());
+                    tvShowEntity.setReleaseDate(tv.getFirstAirDate());
+                    tvShowEntity.setPoster(tv.getPosterPath());
+                    tvShowEntity.setOverview(tv.getOverview());
+                    tvShowEntity.setVoteAverage(tv.getVoteAverage());
+                    return  tvShowEntity;
                 });
     }
 }
