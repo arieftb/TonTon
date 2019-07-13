@@ -2,13 +2,9 @@ package com.arieftb.tonton.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
-
-import com.arieftb.tonton.R;
 
 public class DialogHelper {
     private String title;
@@ -73,8 +69,6 @@ public class DialogHelper {
         builder.setMessage(message)
                 .setCancelable(cancellable)
                 .setPositiveButton(primaryButtonTitle, primaryButtonListener);
-
-        // get your custom views here and configure them based on given settings (field values of this class)
 
         return builder.create();
     }

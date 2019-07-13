@@ -1,5 +1,7 @@
 package com.arieftb.tonton.model.response.moviedetail;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 
@@ -28,6 +30,7 @@ public class GenresItem{
 	}
 
 	@Override
+	@NonNull
  	public String toString(){
 		return 
 			"GenresItem{" + 
