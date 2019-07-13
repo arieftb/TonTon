@@ -11,13 +11,8 @@ public class TvShowEntity implements Parcelable {
     private String poster;
     private String releaseDate;
 
-    public TvShowEntity(int id, String title, String lang, double voteAverage, String poster, String releaseDate) {
-        this.id = id;
-        this.title = title;
-        this.lang = lang;
-        this.voteAverage = voteAverage;
-        this.poster = poster;
-        this.releaseDate = releaseDate;
+    public TvShowEntity() {
+
     }
 
     public int getId() {
@@ -84,7 +79,7 @@ public class TvShowEntity implements Parcelable {
         dest.writeString(this.releaseDate);
     }
 
-    protected TvShowEntity(Parcel in) {
+    private TvShowEntity(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
         this.lang = in.readString();
