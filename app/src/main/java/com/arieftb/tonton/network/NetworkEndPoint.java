@@ -7,7 +7,7 @@
 
 package com.arieftb.tonton.network;
 
-import com.arieftb.tonton.model.response.movies.MoviesResponse;
+import com.arieftb.tonton.model.response.movie.MoviesResponse;
 import com.arieftb.tonton.model.response.tvshow.TvShowsResponse;
 
 import io.reactivex.Observable;

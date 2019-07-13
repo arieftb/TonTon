@@ -13,7 +13,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.arieftb.tonton.data.DataSource;
 import com.arieftb.tonton.data.MovieDataSource;
 import com.arieftb.tonton.model.entity.MovieEntity;
-import com.arieftb.tonton.model.response.movies.MovieItem;
 import com.arieftb.tonton.repo.callback.ConnectionCallback;
 import com.arieftb.tonton.repo.remote.RemoteRepository;
 

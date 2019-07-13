@@ -5,7 +5,7 @@
  * www.arieftb.com
  */
 
-package com.arieftb.tonton.model.response.movies;
+package com.arieftb.tonton.model.response.movie;
 
 import com.google.gson.annotations.SerializedName;
 

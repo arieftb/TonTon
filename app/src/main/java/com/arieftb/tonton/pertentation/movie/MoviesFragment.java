@@ -26,7 +26,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.entity.MovieEntity;
-import com.arieftb.tonton.model.response.movies.MovieItem;
 import com.arieftb.tonton.pertentation.moviedetail.MovieDetailActivity;
 import com.arieftb.tonton.utils.DialogHelper;
 import com.arieftb.tonton.utils.OnItemClickListener;
