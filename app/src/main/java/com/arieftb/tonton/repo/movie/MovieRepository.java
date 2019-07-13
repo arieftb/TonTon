@@ -26,6 +26,7 @@ public class MovieRepository implements MovieDataSource, DataSource {
     private MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>();
     private MutableLiveData<String> errorData = new MutableLiveData<>();
     private MutableLiveData<List<MovieEntity>> moviesData = new MutableLiveData<>();
+    private MutableLiveData<MovieEntity> movieData = new MutableLiveData<>();
 
     private MovieRepository(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
@@ -43,6 +44,7 @@ public class MovieRepository implements MovieDataSource, DataSource {
         return INSTANCE;
     }
 
+
     @Override
     public void onLoadData() {
         remoteRepository.getMovies(value -> moviesData.postValue(value), new ConnectionCallback() {
@@ -58,7 +60,6 @@ public class MovieRepository implements MovieDataSource, DataSource {
         });
     }
 
-
     @Override
     public LiveData<Boolean> isLoading() {
         return isLoadingData;
@@ -69,8 +70,29 @@ public class MovieRepository implements MovieDataSource, DataSource {
         return errorData;
     }
 
+
+    @Override
+    public void getMovieDetail(int id) {
+        remoteRepository.getMovie(id, movieEntity -> movieData.postValue(movieEntity), new ConnectionCallback() {
+            @Override
+            public void onLoading(Boolean isLoading) {
+                isLoadingData.postValue(isLoading);
+            }
+
+            @Override
+            public void onFailed(String message) {
+                errorData.postValue(message);
+            }
+        });
+    }
+
     @Override
     public LiveData<List<MovieEntity>> onMoviesReceived() {
         return moviesData;
+    }
+
+    @Override
+    public LiveData<MovieEntity> onMovieReceived() {
+        return movieData;
     }
 }

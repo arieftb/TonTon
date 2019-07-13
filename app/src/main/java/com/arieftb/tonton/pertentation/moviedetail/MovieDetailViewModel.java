@@ -7,27 +7,38 @@
 
 package com.arieftb.tonton.pertentation.moviedetail;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.arieftb.tonton.model.Movie;
-import com.arieftb.tonton.utils.Dummy;
+import com.arieftb.tonton.model.entity.MovieEntity;
+import com.arieftb.tonton.repo.movie.MovieRepository;
 
 public class MovieDetailViewModel extends ViewModel {
     private int movieId;
-    private Movie movieDetail;
+    private MovieRepository movieRepository;
 
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
+    public MovieDetailViewModel(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
     }
 
-    public Movie getMovieDetail() {
-        for (int i = 0; i < Dummy.getDummyMovies().size(); i++) {
-            Movie movie = Dummy.getDummyMovies().get(i);
-            if (movie.getId() == movieId) {
-                movieDetail = movie;
-            }
-        }
+    void setMovieId(int movieId) {
+        this.movieId = movieId;
+        getMovieDetail();
+    }
 
-        return movieDetail;
+    void getMovieDetail() {
+        movieRepository.getMovieDetail(movieId);
+    }
+
+    LiveData<MovieEntity> getMovie() {
+        return movieRepository.onMovieReceived();
+    }
+
+    LiveData<Boolean> getIsLoading() {
+        return movieRepository.isLoading();
+    }
+
+    LiveData<String> getErroMessage() {
+        return movieRepository.onError();
     }
 }
