@@ -14,19 +14,13 @@ import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.repo.movie.MovieRepository;
 
 public class MovieDetailViewModel extends ViewModel {
-    private int movieId;
     private MovieRepository movieRepository;
 
     public MovieDetailViewModel(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
-    void setMovieId(int movieId) {
-        this.movieId = movieId;
-        getMovieDetail();
-    }
-
-    void getMovieDetail() {
+    void getMovieDetail(int movieId) {
         movieRepository.getMovieDetail(movieId);
     }
 
