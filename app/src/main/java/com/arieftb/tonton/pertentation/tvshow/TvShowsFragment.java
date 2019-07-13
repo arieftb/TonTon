@@ -26,6 +26,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.TvShow;
+import com.arieftb.tonton.model.entity.TvShowEntity;
 import com.arieftb.tonton.pertentation.tvshowdetail.TvShowDetailActivity;
 import com.arieftb.tonton.utils.DialogHelper;
 import com.arieftb.tonton.utils.OnItemClickListener;
@@ -124,11 +125,10 @@ public class TvShowsFragment extends Fragment implements OnItemClickListener, Sw
 
     @Override
     public void onItemClick(View view, Object object) {
-        TvShow tvShow = (TvShow) object;
+        TvShowEntity tvShow = (TvShowEntity) object;
         Intent intent = new Intent(getContext(), TvShowDetailActivity.class);
         intent.putExtra(TvShowDetailActivity.TV_SHOW_ID, tvShow.getId());
-        //TODO Active This If Ready
-//        startActivity(intent);
+        startActivity(intent);
     }
 
     @Override

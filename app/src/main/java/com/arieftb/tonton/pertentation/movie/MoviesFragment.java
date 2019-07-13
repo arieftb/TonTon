@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arieftb.tonton.R;
+import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.model.response.movies.MovieItem;
 import com.arieftb.tonton.pertentation.moviedetail.MovieDetailActivity;
 import com.arieftb.tonton.utils.DialogHelper;
@@ -125,7 +126,7 @@ public class MoviesFragment extends Fragment implements OnItemClickListener, Swi
 
     @Override
     public void onItemClick(View view, Object object) {
-        MovieItem movie = (MovieItem) object;
+        MovieEntity movie = (MovieEntity) object;
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.getId());
         startActivity(intent);
