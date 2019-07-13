@@ -10,7 +10,7 @@
     android:id="@+id/swipe_movies_reload"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.movie.MoviesFragment">
+    tools:context=".pertentation.movie.MoviesFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

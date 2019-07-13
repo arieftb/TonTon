@@ -16,10 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.arieftb.tonton.di.Injection;
 import com.arieftb.tonton.repo.movie.MovieRepository;
 import com.arieftb.tonton.repo.tvshow.TvShowRepository;
-import com.arieftb.tonton.ui.movie.MoviesFragment;
-import com.arieftb.tonton.ui.movie.MoviesViewModel;
-import com.arieftb.tonton.ui.tvshow.TvShowsFragment;
-import com.arieftb.tonton.ui.tvshow.TvShowsViewModel;
+import com.arieftb.tonton.pertentation.movie.MoviesViewModel;
+import com.arieftb.tonton.pertentation.tvshow.TvShowsViewModel;
 
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private static volatile ViewModelFactory INSTANCE;

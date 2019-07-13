@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialAppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.tvshowdetail.TvShowDetailActivity"
+        <activity android:name=".pertentation.tvshowdetail.TvShowDetailActivity"
             android:label="@string/menu_title_tv_show_detail"/>
-        <activity android:name=".ui.moviedetail.MovieDetailActivity"
+        <activity android:name=".pertentation.moviedetail.MovieDetailActivity"
             android:label="@string/menu_title_movie_detail"/>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".pertentation.main.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
