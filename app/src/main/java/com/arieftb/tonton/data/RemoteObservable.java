@@ -1,7 +1,6 @@
 package com.arieftb.tonton.data;
 
 import com.arieftb.tonton.BuildConfig;
-import com.arieftb.tonton.model.Movie;
 import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.model.entity.TvShowEntity;
 import com.arieftb.tonton.model.response.movies.MoviesResponse;
