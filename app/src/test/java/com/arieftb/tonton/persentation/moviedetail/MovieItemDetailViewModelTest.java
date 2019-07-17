@@ -7,35 +7,50 @@
 
 package com.arieftb.tonton.persentation.moviedetail;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.Movie;
+import com.arieftb.tonton.model.entity.MovieEntity;
+import com.arieftb.tonton.repo.movie.MovieRepository;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class MovieItemDetailViewModelTest {
 
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
     private MovieDetailViewModel viewModel;
-    private Movie movieTest;
+    private MovieRepository movieRepository = mock(MovieRepository.class);
 
     @Before
     public void setViewModel() {
-//        viewModel = new MovieDetailViewModel();
-        movieTest = new Movie(1, "A Start Is Born", "Drama", "Seasoned musician Jackson Maine discovers — and falls in love with — struggling artist Ally. She has just about given up on her dream to make it big as a singer — until Jack coaxes her into the spotlight. But even as Ally's career takes off, the personal side of their relationship is breaking down, as Jack fights an ongoing battle with his own internal demons.", "October 5, 2018", 7.5, R.drawable.poster_a_start_is_born);
+        viewModel = new MovieDetailViewModel(movieRepository);
+        viewModel.getMovieDetail(429617);
     }
 
     @Test
     public void getMovieDetail() {
-        viewModel.setMovieId(movieTest.getId());
-//        Movie movie = viewModel.getMovieDetail();
-//
-//        assertNotNull(movie);
-//        assertEquals(movieTest.getId(), movie.getId());
-//        assertEquals(movieTest.getTitle(), movie.getTitle());
-//        assertEquals(movieTest.getGenre(), movie.getGenre());
-//        assertEquals(movieTest.getDescription(), movie.getDescription());
-//        assertEquals(movieTest.getReleaseDate(), movie.getReleaseDate());
-//        assertEquals(movieTest.getRating(), movie.getRating());
-//        assertEquals(movieTest.getPoster(), movie.getPoster());
+        MutableLiveData<MovieEntity> movieData = new MutableLiveData<>();
+        when(movieRepository.onMovieReceived()).thenReturn((movieData));
+
+        Observer<MovieEntity> movieObserver = Mockito.mock(Observer.class);
+        viewModel.getMovie().observeForever(movieObserver);
+        verify(movieRepository).getMovieDetail(429617);
+
+        assertNotNull(movieData);
     }
 }

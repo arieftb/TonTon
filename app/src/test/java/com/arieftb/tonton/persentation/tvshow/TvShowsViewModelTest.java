@@ -7,28 +7,51 @@
 
 package com.arieftb.tonton.persentation.tvshow;
 
-import com.arieftb.tonton.model.TvShow;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+
+import com.arieftb.tonton.model.entity.TvShowEntity;
+import com.arieftb.tonton.repo.tvshow.TvShowRepository;
+import com.arieftb.tonton.utils.DataDummy;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class TvShowsViewModelTest {
 
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
     private TvShowsViewModel tvShowsViewModel;
+    private TvShowRepository tvShowRepository = mock(TvShowRepository.class);
 
     @Before
     public void setTvShowsViewModel() {
-        tvShowsViewModel = new TvShowsViewModel();
+        tvShowsViewModel = new TvShowsViewModel(tvShowRepository);
     }
 
     @Test
     public void getTvShows() {
-        List<TvShow> tvShows = tvShowsViewModel.getTvShows();
-        assertNotNull(tvShows);
-        assertEquals(19, tvShows.size());
+        MutableLiveData<List<TvShowEntity>> tvShowsData = new MutableLiveData<>();
+        tvShowsData.postValue(DataDummy.generateTvShows());
+
+        when(tvShowRepository.onTvShowsReceived()).thenReturn((tvShowsData));
+
+        Observer<List<TvShowEntity>> movieObserver = Mockito.mock(Observer.class);
+        tvShowsViewModel.getTvShows().observeForever(movieObserver);
+        verify(tvShowRepository).getTvShows();
+
+        assertEquals(tvShowsViewModel.getTvShows(), tvShowsData);
     }
 }

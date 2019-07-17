@@ -25,7 +25,9 @@ public class MoviesViewModel extends ViewModel {
 
     void getMoviesData() { movieRepository.getMovies(); }
 
-    LiveData<List<MovieEntity>> getMovies() { return movieRepository.onMoviesReceived(); }
+    LiveData<List<MovieEntity>> getMovies() {
+        return movieRepository.onMoviesReceived();
+    }
 
     LiveData<Boolean> getIsLoading() {
         return movieRepository.isLoading();

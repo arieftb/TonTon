@@ -15,6 +15,16 @@ public class MovieEntity implements Parcelable {
     public MovieEntity() {
     }
 
+    public MovieEntity(int id, String title, String lang, double voteAverage, String poster, String releaseDate, String overview) {
+        this.id = id;
+        this.title = title;
+        this.lang = lang;
+        this.voteAverage = voteAverage;
+        this.poster = poster;
+        this.releaseDate = releaseDate;
+        this.overview = overview;
+    }
+
     public String getOverview() {
         return overview;
     }

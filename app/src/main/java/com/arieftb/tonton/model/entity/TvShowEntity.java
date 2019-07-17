@@ -24,6 +24,16 @@ public class TvShowEntity implements Parcelable {
 
     }
 
+    public TvShowEntity(int id, String title, String lang, double voteAverage, String poster, String releaseDate, String overview) {
+        this.id = id;
+        this.title = title;
+        this.lang = lang;
+        this.voteAverage = voteAverage;
+        this.poster = poster;
+        this.releaseDate = releaseDate;
+        this.overview = overview;
+    }
+
     public int getId() {
         return id;
     }
