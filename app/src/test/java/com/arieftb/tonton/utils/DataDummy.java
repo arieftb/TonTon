@@ -30,4 +30,16 @@ public class DataDummy {
 
         return tvShows;
     }
+
+
+    public static MovieEntity getMovie(int id) {
+        for (int i  = 0; i < generateMovie().size(); i++) {
+            MovieEntity movie = generateMovie().get(i);
+            if (movie.getId() == id) {
+                return movie;
+            }
+        }
+
+        return null;
+    }
 }

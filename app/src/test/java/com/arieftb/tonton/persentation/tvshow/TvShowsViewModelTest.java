@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -50,8 +51,10 @@ public class TvShowsViewModelTest {
 
         Observer<List<TvShowEntity>> movieObserver = Mockito.mock(Observer.class);
         tvShowsViewModel.getTvShows().observeForever(movieObserver);
-        verify(tvShowRepository).getTvShows();
 
-        assertEquals(tvShowsViewModel.getTvShows(), tvShowsData);
+        verify(tvShowRepository).getTvShows();
+        verify(tvShowRepository).onTvShowsReceived();
+
+        assertEquals(Objects.requireNonNull(tvShowsViewModel.getTvShows().getValue()).get(0), Objects.requireNonNull(tvShowsData.getValue()).get(0));
     }
 }

@@ -14,7 +14,10 @@ import androidx.lifecycle.Observer;
 
 import com.arieftb.tonton.model.Movie;
 import com.arieftb.tonton.model.entity.MovieEntity;
+import com.arieftb.tonton.repo.callback.ConnectionCallback;
+import com.arieftb.tonton.repo.callback.MoviesCallback;
 import com.arieftb.tonton.repo.movie.MovieRepository;
+import com.arieftb.tonton.repo.remote.RemoteRepository;
 import com.arieftb.tonton.utils.DataDummy;
 
 import org.junit.After;
@@ -64,7 +67,8 @@ public class MoviesViewModelTest {
         viewModel.getMovies().observeForever(movieObserver);
 
         verify(movieRepository).getMovies();
+        verify(movieRepository).onMoviesReceived();
 
-        assertEquals(viewModel.getMovies(), moviesData);
+        assertEquals(Objects.requireNonNull(viewModel.getMovies().getValue()).get(0), Objects.requireNonNull(moviesData.getValue()).get(0));
     }
 }
