@@ -7,37 +7,55 @@
 
 package com.arieftb.tonton.persentation.tvshowdetail;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+
 import com.arieftb.tonton.R;
 import com.arieftb.tonton.model.TvShow;
+import com.arieftb.tonton.model.entity.TvShowEntity;
+import com.arieftb.tonton.repo.tvshow.TvShowRepository;
+import com.arieftb.tonton.utils.DataDummy;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import java.util.Objects;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class TvShowDetailViewModelTest {
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private TvShowDetailViewModel viewModel;
-    private TvShow tvShowTest;
+    private TvShowRepository tvShowRepository = mock(TvShowRepository.class);
 
     @Before
     public void setViewModel() {
-//        viewModel = new TvShowDetailViewModel();
-//        tvShowTest = new TvShow(1, "Arrow", "Crime", "Spoiled billionaire playboy Oliver Queen is missing and presumed dead when his yacht is lost at sea. He returns five years later a changed man, determined to clean up the city as a hooded vigilante armed with a bow.", "October 10, 2012", 5.8, R.drawable.poster_arrow);
+        viewModel = new TvShowDetailViewModel(tvShowRepository);
+        viewModel.getTvShowDetail(456);
     }
 
     @Test
     public void getTvShowDetail() {
-//        viewModel.setTvShowId(tvShowTest.getId());
-//        TvShow tvShow = viewModel.getTvShowDetail();
-//
-//        assertNotNull(tvShow);
-//        assertEquals(tvShowTest.getId(), tvShow.getId());
-//        assertEquals(tvShowTest.getTitle(), tvShow.getTitle());
-//        assertEquals(tvShowTest.getGenre(), tvShow.getGenre());
-//        assertEquals(tvShowTest.getDescription(), tvShow.getDescription());
-//        assertEquals(tvShowTest.getReleaseDate(), tvShow.getReleaseDate());
-//        assertEquals(tvShowTest.getRating(), tvShow.getRating());
-//        assertEquals(tvShowTest.getPoster(), tvShow.getPoster());
+        MutableLiveData<TvShowEntity> tvShowData = new MutableLiveData<>();
+        tvShowData.postValue(DataDummy.getTvShow(456));
+
+        when(tvShowRepository.onTvShowReceived()).thenReturn((tvShowData));
+
+        Observer<TvShowEntity> movieObserver = Mockito.mock(Observer.class);
+        viewModel.getTvShow().observeForever(movieObserver);
+
+        verify(tvShowRepository).getTvShow(456);
+        verify(tvShowRepository).onTvShowReceived();
+
+        assertNotNull(viewModel.getTvShow().getValue());
+        assertEquals(Objects.requireNonNull(viewModel.getTvShow().getValue()).getTitle(), tvShowData.getValue().getTitle());
     }
 }

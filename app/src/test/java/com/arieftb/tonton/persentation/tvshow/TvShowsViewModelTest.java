@@ -55,6 +55,7 @@ public class TvShowsViewModelTest {
         verify(tvShowRepository).getTvShows();
         verify(tvShowRepository).onTvShowsReceived();
 
+        assertNotNull(tvShowsViewModel.getTvShows().getValue());
         assertEquals(Objects.requireNonNull(tvShowsViewModel.getTvShows().getValue()).get(0), Objects.requireNonNull(tvShowsData.getValue()).get(0));
     }
 }

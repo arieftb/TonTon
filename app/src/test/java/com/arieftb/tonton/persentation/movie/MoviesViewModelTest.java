@@ -69,6 +69,7 @@ public class MoviesViewModelTest {
         verify(movieRepository).getMovies();
         verify(movieRepository).onMoviesReceived();
 
+        assertNotNull(viewModel.getMovies().getValue());
         assertEquals(Objects.requireNonNull(viewModel.getMovies().getValue()).get(0), Objects.requireNonNull(moviesData.getValue()).get(0));
     }
 }

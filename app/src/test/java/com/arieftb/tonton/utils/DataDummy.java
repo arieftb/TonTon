@@ -42,4 +42,15 @@ public class DataDummy {
 
         return null;
     }
+
+    public static TvShowEntity getTvShow(int id) {
+        for (int i  = 0; i < generateTvShows().size(); i++) {
+            TvShowEntity tvShow = generateTvShows().get(i);
+            if (tvShow.getId() == id) {
+                return tvShow;
+            }
+        }
+
+        return null;
+    }
 }
