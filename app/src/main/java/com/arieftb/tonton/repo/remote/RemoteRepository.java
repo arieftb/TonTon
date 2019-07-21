@@ -11,6 +11,7 @@ import android.app.Application;
 
 import com.arieftb.tonton.BuildConfig;
 import com.arieftb.tonton.data.RemoteObservable;
+import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.network.NetworkClient;
 import com.arieftb.tonton.network.NetworkFailed;
 import com.arieftb.tonton.repo.callback.ConnectionCallback;
@@ -18,6 +19,8 @@ import com.arieftb.tonton.repo.callback.MovieCallback;
 import com.arieftb.tonton.repo.callback.MoviesCallback;
 import com.arieftb.tonton.repo.callback.TvShowCallback;
 import com.arieftb.tonton.repo.callback.TvShowsCallback;
+
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -29,6 +32,8 @@ public class RemoteRepository {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private NetworkFailed networkFailed = new NetworkFailed();
     private final Application application;
+
+
 
     private RemoteRepository(NetworkClient networkClient, Application application) {
         this.networkClient = networkClient;

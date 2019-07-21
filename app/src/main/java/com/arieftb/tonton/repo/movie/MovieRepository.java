@@ -28,7 +28,7 @@ public class MovieRepository implements MovieDataSource, DataSource {
     private MutableLiveData<List<MovieEntity>> moviesData = new MutableLiveData<>();
     private MutableLiveData<MovieEntity> movieData = new MutableLiveData<>();
 
-    private MovieRepository(RemoteRepository remoteRepository) {
+    MovieRepository(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
     }
 
