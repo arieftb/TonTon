@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.arieftb.tonton.model.entity.TvShowEntity;
 import com.arieftb.tonton.repo.callback.ConnectionCallback;
+import com.arieftb.tonton.repo.callback.TvShowCallback;
 import com.arieftb.tonton.repo.callback.TvShowsCallback;
 import com.arieftb.tonton.repo.remote.RemoteRepository;
 import com.arieftb.tonton.utils.DataDummy;
@@ -17,6 +18,7 @@ import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -29,6 +31,7 @@ public class TvShowRepositoryTest {
 
     private RemoteRepository remoteRepository = mock(RemoteRepository.class);
     private List<TvShowEntity> tvShows = DataDummy.generateTvShows();
+    private TvShowEntity tvShow = DataDummy.getTvShow(456);
     private TvShowRepository tvShowRepository = new TvShowRepository(remoteRepository);
 
     @Test
@@ -48,6 +51,16 @@ public class TvShowRepositoryTest {
 
     @Test
     public void getTvShow() {
+        doAnswer(invocation -> {
+            ((TvShowCallback) invocation.getArguments()[1]).onTvShowReceived(tvShow);
+            return null;
+        }).when(remoteRepository).getTvShow(anyInt(), any(TvShowCallback.class), any(ConnectionCallback.class));
 
+        tvShowRepository.getTvShow(456);
+        TvShowEntity tvShowEntity = LiveDataTestUtil.getValue(tvShowRepository.onTvShowReceived());
+
+        verify(remoteRepository, times(1)).getTvShow(anyInt(), any(TvShowCallback.class), any(ConnectionCallback.class));
+
+        assertEquals(tvShow, tvShowEntity);
     }
 }
