@@ -15,16 +15,16 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.Movie;
 import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.utils.DataDummy;
-import com.arieftb.tonton.utils.Dummy;
 import com.arieftb.tonton.utils.EspressoIdlingResource;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.Objects;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -43,7 +43,7 @@ public class MovieItemDetailActivityTest {
         protected Intent getActivityIntent() {
             Context destinationContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
             Intent intent = new Intent(destinationContext, MovieDetailActivity.class);
-            intent.putExtra(MovieDetailActivity.MOVIE_ID, 429617);
+            intent.putExtra(MovieDetailActivity.MOVIE_ID, Objects.requireNonNull(movieDummy).getId());
 
             return intent;
         }
@@ -61,10 +61,10 @@ public class MovieItemDetailActivityTest {
     }
 
     @Test
-    public void loadMovieDetail() throws InterruptedException {
+    public void loadMovieDetail() {
 //        Check Title
         onView(withId(R.id.text_movie_detail_title)).check(matches(isDisplayed()));
-        onView(withId(R.id.text_movie_detail_title)).check(matches(withText(movieDummy.getTitle())));
+        onView(withId(R.id.text_movie_detail_title)).check(matches(withText(Objects.requireNonNull(movieDummy).getTitle())));
 
 //        Check Rating
         onView(withId(R.id.text_movie_detail_rating)).check(matches(isDisplayed()));
