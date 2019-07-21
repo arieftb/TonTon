@@ -8,31 +8,23 @@
 package com.arieftb.tonton.persentation.movie;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.arieftb.tonton.model.Movie;
 import com.arieftb.tonton.model.entity.MovieEntity;
-import com.arieftb.tonton.repo.callback.ConnectionCallback;
-import com.arieftb.tonton.repo.callback.MoviesCallback;
 import com.arieftb.tonton.repo.movie.MovieRepository;
-import com.arieftb.tonton.repo.remote.RemoteRepository;
 import com.arieftb.tonton.utils.DataDummy;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import retrofit2.Response;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -43,17 +35,12 @@ public class MoviesViewModelTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private MoviesViewModel viewModel;
-    private MovieRepository movieRepository = mock(MovieRepository.class);
+    private final MovieRepository movieRepository = mock(MovieRepository.class);
 
 
     @Before
     public void setViewModel() {
         viewModel = new MoviesViewModel(movieRepository);
-    }
-
-    @After
-    public void tearDown() {
-
     }
 
     @Test

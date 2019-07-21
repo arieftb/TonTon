@@ -16,7 +16,7 @@ import com.arieftb.tonton.repo.movie.MovieRepository;
 import java.util.List;
 
 public class MoviesViewModel extends ViewModel {
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
     public MoviesViewModel(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;

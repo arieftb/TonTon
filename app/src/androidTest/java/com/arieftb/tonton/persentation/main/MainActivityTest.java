@@ -43,7 +43,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void testAppBehaviour() throws InterruptedException {
+    public void testAppBehaviour() {
         onView(withId(R.id.recycler_movies_list)).check(matches(isDisplayed()));
         onView(withId(R.id.nav_main_bottom)).check(matches(isDisplayed()));
 

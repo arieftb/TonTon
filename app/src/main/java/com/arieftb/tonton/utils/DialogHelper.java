@@ -13,7 +13,7 @@ public class DialogHelper {
     private String secondaryButtonTitle;
     private Dialog.OnClickListener primaryButtonListener;
     private Dialog.OnClickListener secondaryButtonListener;
-    private Activity context;
+    private final Activity context;
     private boolean showIcon;
     private boolean cancellable = true;
 

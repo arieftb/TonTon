@@ -11,8 +11,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.Movie;
 import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.repo.movie.MovieRepository;
 import com.arieftb.tonton.utils.DataDummy;
@@ -22,7 +20,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.List;
 import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
@@ -37,7 +34,7 @@ public class MovieItemDetailViewModelTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private MovieDetailViewModel viewModel;
-    private MovieRepository movieRepository = mock(MovieRepository.class);
+    private final MovieRepository movieRepository = mock(MovieRepository.class);
 
     @Before
     public void setViewModel() {
@@ -59,6 +56,6 @@ public class MovieItemDetailViewModelTest {
         verify(movieRepository).onMovieReceived();
 
         assertNotNull(viewModel.getMovie().getValue());
-        assertEquals(Objects.requireNonNull(viewModel.getMovie().getValue()).getTitle(), movieData.getValue().getTitle());
+        assertEquals(Objects.requireNonNull(viewModel.getMovie().getValue()).getTitle(), Objects.requireNonNull(movieData.getValue()).getTitle());
     }
 }

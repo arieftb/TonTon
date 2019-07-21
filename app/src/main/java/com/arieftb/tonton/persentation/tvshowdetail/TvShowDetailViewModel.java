@@ -10,15 +10,11 @@ package com.arieftb.tonton.persentation.tvshowdetail;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.arieftb.tonton.model.TvShow;
 import com.arieftb.tonton.model.entity.TvShowEntity;
 import com.arieftb.tonton.repo.tvshow.TvShowRepository;
-import com.arieftb.tonton.utils.Dummy;
 
 public class TvShowDetailViewModel extends ViewModel {
-    private int tvShowId;
-    private TvShow tvShowDetail;
-    private TvShowRepository tvShowRepository;
+    private final TvShowRepository tvShowRepository;
 
     public TvShowDetailViewModel(TvShowRepository tvShowRepository) {
         this.tvShowRepository = tvShowRepository;
@@ -38,20 +34,5 @@ public class TvShowDetailViewModel extends ViewModel {
 
     LiveData<String> getErrorMessage() {
         return tvShowRepository.onError();
-    }
-
-    public void setTvShowId(int tvShowId) {
-        this.tvShowId = tvShowId;
-    }
-
-    public TvShow getTvShowDetail() {
-        for (int i = 0; i < Dummy.getDummyTvShows().size(); i++) {
-            TvShow tvShow = Dummy.getDummyTvShows().get(i);
-            if (tvShow.getId() == tvShowId) {
-                tvShowDetail = tvShow;
-            }
-        }
-
-        return tvShowDetail;
     }
 }

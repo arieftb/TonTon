@@ -24,8 +24,8 @@ import com.arieftb.tonton.persentation.tvshow.TvShowsViewModel;
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private static volatile ViewModelFactory INSTANCE;
 
-    private MovieRepository movieRepository;
-    private TvShowRepository tvShowRepository;
+    private final MovieRepository movieRepository;
+    private final TvShowRepository tvShowRepository;
 
     private ViewModelFactory(MovieRepository movieRepository, TvShowRepository tvShowRepository) {
         this.movieRepository = movieRepository;

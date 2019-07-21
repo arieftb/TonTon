@@ -16,10 +16,10 @@ public class TvShowRepository implements TvShowDataSource, DataSource {
     private volatile static TvShowRepository INSTANCE = null;
 
     private final RemoteRepository remoteRepository;
-    private MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>();
-    private MutableLiveData<String> errorData = new MutableLiveData<>();
-    private MutableLiveData<List<TvShowEntity>> tvShowItems = new MutableLiveData<>();
-    private MutableLiveData<TvShowEntity> tvShow = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>();
+    private final MutableLiveData<String> errorData = new MutableLiveData<>();
+    private final MutableLiveData<List<TvShowEntity>> tvShowItems = new MutableLiveData<>();
+    private final MutableLiveData<TvShowEntity> tvShow = new MutableLiveData<>();
 
     TvShowRepository(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;

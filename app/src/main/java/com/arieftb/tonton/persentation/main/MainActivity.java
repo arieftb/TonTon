@@ -22,7 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    public final String SELECTED_MENU = "selected_menu";
+    private final String SELECTED_MENU = "selected_menu";
     private BottomNavigationView navMainBottom;
 
     @Override

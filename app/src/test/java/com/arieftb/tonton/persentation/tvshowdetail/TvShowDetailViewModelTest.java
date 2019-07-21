@@ -11,8 +11,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.arieftb.tonton.R;
-import com.arieftb.tonton.model.TvShow;
 import com.arieftb.tonton.model.entity.TvShowEntity;
 import com.arieftb.tonton.repo.tvshow.TvShowRepository;
 import com.arieftb.tonton.utils.DataDummy;
@@ -24,7 +22,8 @@ import org.mockito.Mockito;
 
 import java.util.Objects;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,7 +33,7 @@ public class TvShowDetailViewModelTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private TvShowDetailViewModel viewModel;
-    private TvShowRepository tvShowRepository = mock(TvShowRepository.class);
+    private final TvShowRepository tvShowRepository = mock(TvShowRepository.class);
 
     @Before
     public void setViewModel() {
@@ -56,6 +55,6 @@ public class TvShowDetailViewModelTest {
         verify(tvShowRepository).onTvShowReceived();
 
         assertNotNull(viewModel.getTvShow().getValue());
-        assertEquals(Objects.requireNonNull(viewModel.getTvShow().getValue()).getTitle(), tvShowData.getValue().getTitle());
+        assertEquals(Objects.requireNonNull(viewModel.getTvShow().getValue()).getTitle(), Objects.requireNonNull(tvShowData.getValue()).getTitle());
     }
 }

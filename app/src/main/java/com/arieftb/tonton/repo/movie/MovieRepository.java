@@ -23,10 +23,10 @@ public class MovieRepository implements MovieDataSource, DataSource {
     private volatile static MovieRepository INSTANCE = null;
 
     private final RemoteRepository remoteRepository;
-    private MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>();
-    private MutableLiveData<String> errorData = new MutableLiveData<>();
-    private MutableLiveData<List<MovieEntity>> moviesData = new MutableLiveData<>();
-    private MutableLiveData<MovieEntity> movieData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isLoadingData = new MutableLiveData<>();
+    private final MutableLiveData<String> errorData = new MutableLiveData<>();
+    private final MutableLiveData<List<MovieEntity>> moviesData = new MutableLiveData<>();
+    private final MutableLiveData<MovieEntity> movieData = new MutableLiveData<>();
 
     MovieRepository(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
@@ -57,7 +57,7 @@ public class MovieRepository implements MovieDataSource, DataSource {
 
     @Override
     public void getMovies() {
-        remoteRepository.getMovies(value -> moviesData.postValue(value), new ConnectionCallback() {
+        remoteRepository.getMovies(moviesData::postValue, new ConnectionCallback() {
             @Override
             public void onLoading(Boolean isLoading) {
                 isLoadingData.postValue(isLoading);
@@ -72,7 +72,7 @@ public class MovieRepository implements MovieDataSource, DataSource {
 
     @Override
     public void getMovieDetail(int id) {
-        remoteRepository.getMovie(id, movieEntity -> movieData.postValue(movieEntity), new ConnectionCallback() {
+        remoteRepository.getMovie(id, movieData::postValue, new ConnectionCallback() {
             @Override
             public void onLoading(Boolean isLoading) {
                 isLoadingData.postValue(isLoading);

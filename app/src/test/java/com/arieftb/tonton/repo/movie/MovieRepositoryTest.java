@@ -19,7 +19,6 @@ import java.util.Objects;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -29,10 +28,10 @@ public class MovieRepositoryTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private RemoteRepository remoteRepository = mock(RemoteRepository.class);
-    private List<MovieEntity> movies = DataDummy.generateMovie();
-    private MovieEntity movie = DataDummy.getMovie(429617);
-    private MovieRepository movieRepository = new MovieRepository(remoteRepository);
+    private final RemoteRepository remoteRepository = mock(RemoteRepository.class);
+    private final List<MovieEntity> movies = DataDummy.generateMovie();
+    private final MovieEntity movie = DataDummy.getMovie(429617);
+    private final MovieRepository movieRepository = new MovieRepository(remoteRepository);
 
     @Test
     public void getMovies() {

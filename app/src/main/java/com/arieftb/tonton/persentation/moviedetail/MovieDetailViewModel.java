@@ -14,7 +14,7 @@ import com.arieftb.tonton.model.entity.MovieEntity;
 import com.arieftb.tonton.repo.movie.MovieRepository;
 
 public class MovieDetailViewModel extends ViewModel {
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
     public MovieDetailViewModel(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;

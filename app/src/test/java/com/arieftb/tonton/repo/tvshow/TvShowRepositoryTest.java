@@ -29,10 +29,10 @@ public class TvShowRepositoryTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private RemoteRepository remoteRepository = mock(RemoteRepository.class);
-    private List<TvShowEntity> tvShows = DataDummy.generateTvShows();
-    private TvShowEntity tvShow = DataDummy.getTvShow(456);
-    private TvShowRepository tvShowRepository = new TvShowRepository(remoteRepository);
+    private final RemoteRepository remoteRepository = mock(RemoteRepository.class);
+    private final List<TvShowEntity> tvShows = DataDummy.generateTvShows();
+    private final TvShowEntity tvShow = DataDummy.getTvShow(456);
+    private final TvShowRepository tvShowRepository = new TvShowRepository(remoteRepository);
 
     @Test
     public void getTvShows() {

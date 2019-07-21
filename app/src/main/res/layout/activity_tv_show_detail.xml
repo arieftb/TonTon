@@ -32,7 +32,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                tools:src="@drawable/poster_dragon_ball" />
+                tools:src="@drawable/img_placeholder" />
 
             <View
                 android:id="@+id/view_tv_show_detail_banner"
@@ -184,7 +184,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:src="@drawable/poster_dragon_ball" />
+                        tools:src="@drawable/img_placeholder" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

@@ -6,7 +6,7 @@ import com.arieftb.tonton.model.entity.TvShowEntity;
 import java.util.ArrayList;
 
 public class DataDummy {
-    public static ArrayList<MovieEntity> generateMovie() {
+    private static ArrayList<MovieEntity> generateMovie() {
         ArrayList<MovieEntity> movies = new ArrayList<>();
 
         movies.add(new MovieEntity(429617, "Spider-Man: Far from Home", "en", 7.8, "/rjbNpRMoVvqHmhmksbokcyCr7wn.jpg", "2019-06-28", "Peter Parker and his friends go on a summer trip to Europe. However, they will hardly be able to rest - Peter will have to agree to help Nick Fury uncover the mystery of creatures that cause natural disasters and destruction throughout the continent."));
@@ -17,7 +17,7 @@ public class DataDummy {
         return movies;
     }
 
-    public static ArrayList<TvShowEntity> generateTvShows() {
+    private static ArrayList<TvShowEntity> generateTvShows() {
         ArrayList<TvShowEntity> tvShows = new ArrayList<>();
 
         tvShows.add(new TvShowEntity(11634, "See No Evil: The Moors Murders", "en", 5.5, "/b71BaRjp9TwxUZodLGgSRIlkfL8.jpg", "2006-05-14", "The dramatisation of one of the most notorious killing sprees in British history."));
