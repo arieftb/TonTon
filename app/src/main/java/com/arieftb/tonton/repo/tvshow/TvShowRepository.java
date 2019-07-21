@@ -21,7 +21,7 @@ public class TvShowRepository implements TvShowDataSource, DataSource {
     private MutableLiveData<List<TvShowEntity>> tvShowItems = new MutableLiveData<>();
     private MutableLiveData<TvShowEntity> tvShow = new MutableLiveData<>();
 
-    private TvShowRepository(RemoteRepository remoteRepository) {
+    TvShowRepository(RemoteRepository remoteRepository) {
         this.remoteRepository = remoteRepository;
     }
 
