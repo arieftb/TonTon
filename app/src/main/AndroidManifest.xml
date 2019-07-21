@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:allowBackup="true"
         android:theme="@style/MaterialAppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:usesCleartextTraffic="true">
         <activity android:name=".persentation.tvshowdetail.TvShowDetailActivity"
             android:label="@string/menu_title_tv_show_detail"/>
         <activity android:name=".persentation.moviedetail.MovieDetailActivity"

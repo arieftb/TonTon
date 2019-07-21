@@ -7,12 +7,16 @@
 
 package com.arieftb.tonton.persentation.main;
 
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
 import com.arieftb.tonton.R;
+import com.arieftb.tonton.utils.EspressoIdlingResource;
 import com.arieftb.tonton.utils.RecyclerViewItemCountAssertion;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -28,19 +32,30 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+    @Before
+    public void setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource());
+    }
+
+    @After
+    public void tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getEspressoIdlingResource());
+    }
+
     @Test
     public void testAppBehaviour() throws InterruptedException {
         onView(withId(R.id.recycler_movies_list)).check(matches(isDisplayed()));
         onView(withId(R.id.nav_main_bottom)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.recycler_movies_list)).check(new RecyclerViewItemCountAssertion(18));
-        Thread.sleep(3000);
+        onView(withId(R.id.recycler_movies_list)).check(new RecyclerViewItemCountAssertion(20));
+
 
         onView(withId(R.id.recycler_movies_list)).perform(RecyclerViewActions.scrollToPosition(17));
-        Thread.sleep(3000);
+
+
         onView(withId(R.id.recycler_movies_list)).perform(RecyclerViewActions.actionOnItemAtPosition(17, click()));
 
-        Thread.sleep(3000);
+
         pressBack();
 
         onView(withId(R.id.recycler_movies_list)).check(matches(isDisplayed()));
@@ -48,17 +63,18 @@ public class MainActivityTest {
         onView(withId(R.id.menu_tv_shows)).perform(click());
 
         onView(withId(R.id.recycler_tv_shows_list)).check(matches(isDisplayed()));
-        onView(withId(R.id.recycler_tv_shows_list)).check(new RecyclerViewItemCountAssertion(19));
-        Thread.sleep(3000);
+        onView(withId(R.id.recycler_tv_shows_list)).check(new RecyclerViewItemCountAssertion(20));
+
+
         onView(withId(R.id.recycler_tv_shows_list)).perform(RecyclerViewActions.scrollToPosition(18));
-        Thread.sleep(3000);
+
         onView(withId(R.id.recycler_tv_shows_list)).perform(RecyclerViewActions.actionOnItemAtPosition(18, click()));
 
-        Thread.sleep(3000);
+
         pressBack();
 
         onView(withId(R.id.recycler_tv_shows_list)).check(matches(isDisplayed()));
         onView(withId(R.id.nav_main_bottom)).check(matches(isDisplayed()));
-        Thread.sleep(3000);
+
     }
 }
