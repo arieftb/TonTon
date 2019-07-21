@@ -18,6 +18,7 @@ import com.arieftb.tonton.repo.callback.MovieCallback;
 import com.arieftb.tonton.repo.callback.MoviesCallback;
 import com.arieftb.tonton.repo.callback.TvShowCallback;
 import com.arieftb.tonton.repo.callback.TvShowsCallback;
+import com.arieftb.tonton.utils.EspressoIdlingResource;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -46,12 +47,16 @@ public class RemoteRepository {
 
     public void getMovies(final MoviesCallback moviesCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
+        EspressoIdlingResource.increment();
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
         compositeDisposable.add(RemoteObservable.getMoviesMap(networkClient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
-                .doOnComplete( () -> connectionCallback.onLoading(false))
+                .doOnComplete( () -> {
+                    connectionCallback.onLoading(false);
+                    EspressoIdlingResource.decrement();
+                })
                 .subscribe(movieEntities -> {
                     moviesCallback.onMoviesReceived(movieEntities);
                     connectionCallback.onFailed(null);
@@ -64,12 +69,16 @@ public class RemoteRepository {
 
     public void getTvShows(final TvShowsCallback tvShowsCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
+        EspressoIdlingResource.increment();
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
         compositeDisposable.add(RemoteObservable.getTvShowsMap(networkClient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
-                .doOnComplete( () -> connectionCallback.onLoading(false))
+                .doOnComplete( () -> {
+                    connectionCallback.onLoading(false);
+                    EspressoIdlingResource.decrement();
+                })
                 .subscribe(tvShowsCallback::onTvShowReceived, e-> {
                     connectionCallback.onFailed(networkFailed.getUserErrorMessage(e, application));
                     connectionCallback.onLoading(false);
@@ -79,12 +88,16 @@ public class RemoteRepository {
 
     public void getMovie(int id, final MovieCallback movieCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
+        EspressoIdlingResource.increment();
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
         compositeDisposable.add(RemoteObservable.getMovieMap(networkClient, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
-                .doOnComplete( () -> connectionCallback.onLoading(false))
+                .doOnComplete( () -> {
+                    connectionCallback.onLoading(false);
+                    EspressoIdlingResource.decrement();
+                })
                 .subscribe(movieEntity -> {
                     movieCallback.onMovieReceived(movieEntity);
                     connectionCallback.onFailed(null);
@@ -98,12 +111,16 @@ public class RemoteRepository {
 
     public void getTvShow(int id, final TvShowCallback tvShowCallback, final ConnectionCallback connectionCallback) {
         connectionCallback.onLoading(true);
+        EspressoIdlingResource.increment();
         networkClient.setBaseUrl(BuildConfig.BASE_URL_MOVIE);
         compositeDisposable.add(RemoteObservable.getTvShowMap(networkClient, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe( d -> connectionCallback.onLoading(true))
-                .doOnComplete( () -> connectionCallback.onLoading(false))
+                .doOnComplete( () -> {
+                    connectionCallback.onLoading(false);
+                    EspressoIdlingResource.decrement();
+                })
                 .subscribe(tvShowEntity -> {
                     tvShowCallback.onTvShowReceived(tvShowEntity);
                     connectionCallback.onFailed(null);
